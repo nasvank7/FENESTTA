@@ -1,0 +1,87 @@
+<%-include('../partials/user-header')%>
+
+<section class="signin-page account">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="block text-center">
+            <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a>
+            <h2 class="text-center">Create Your Account</h2>
+            <form class="text-left clearfix" action="/signup" method="post" name="basic" onsubmit="return validateBasic()" >
+              <div class="form-group">
+                <input type="text" class="form-control" name="name" placeholder=" Name">
+              </div>
+             
+              <div class="form-group">
+                <input type="text" class="form-control" name="username"  placeholder="Username">
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control"  name="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control" name="phone" placeholder="Phone number">
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-main text-center">Sign In</button>
+              </div>
+            </form>
+            <p class="mt-20">Already hava an account ?<a href="/login"> Login</a></p>
+            <p><a href="forget-password.html"> Forgot your password?</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function validateBasic() {
+ 
+    var name = document.forms["basic"]["name"].value.trim();
+    var email = document.forms["basic"]["email"].value.trim();
+    var username =document.forms['basic']['username'].value.trim()
+    var password = document.forms["basic"]["password"].value;
+
+    // Validation for name field
+    if (name == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+
+
+
+    // Validation for email field
+    if (email == "") {
+        alert("Email must be filled out");
+        return false;
+    } else {
+        // regex for email validation
+        var email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (!email_regex.test(email)) {
+            alert("Invalid email address");
+            return false;
+        }
+    }
+   //validation for username
+     if (username == "") {
+        alert("Username must be filled out");
+        return false;
+    }
+
+
+    // Validation for password field
+    if (password == "") {
+        alert("Password must be filled out");
+        return false;
+    }
+
+    return true; // form is valid
+}
+  </script>
+<%-include('../partials/user-footer')%>
+
+  

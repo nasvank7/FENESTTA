@@ -1,0 +1,79 @@
+
+
+
+    <!-- Favicon -->
+    <link href="/asset_2/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/asset_2/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/asset_2/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/asset_2/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Template Stylesheet -->
+    <link href="/asset_2/css/style.css" rel="stylesheet" type="text/css">
+
+
+
+
+    <!-- Form Start -->
+    <div class="container-fluid pt-4 px-4 ">
+        <div class="row g-4 align-items-center justify-content-center mt-5">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Update Product</h6>
+                    <form action="/update_product/<%= prod._id %>" id="update_product" name="basic" method="post"
+                        enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" value="<%= prod.name %>"
+                                id="exampleInputPassword1" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">price</label>
+                            <input type="number" class="form-control" name="price" value="<%= prod.price %>" />
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="image">Photo file:</label>
+                            <input type="file" class="form-control-file" id="photo" name="photo">
+                            <img src="/<%= prod.photo %>" width="100" class="img-thumbnail mt-3" alt="">
+                        </div>
+
+                        <div class="form-group dropdown mt-4">
+                            <button type="button" class="btn btn-light" data-toggle="dropdown">
+                                Categories
+                                <select name="category">
+                                    <% category.forEach(function(product) { %>
+                                        <option value="<%= product.category %>" <% if
+                                            (product.category===prod.category_name) { %>
+                                            selected
+                                            <% } %>>
+                                                <%= product.category %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                            </button>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-5">
+                            Update Product
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Form End -->
+
+    <%-include('../partials/admin-footer')%>
