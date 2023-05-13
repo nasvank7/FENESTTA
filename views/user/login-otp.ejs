@@ -1,73 +1,68 @@
 
+
 <%-include('../partials/user-header')%>
 
-<section class="login_part">
+<section class="signin-page account ">
     <div class="container">
-      <div class="row align-items-center justify-content-center">
-        <div class="col-lg-6 col-md-6">
-          <% if(locals.msg) { %>
-          <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
-          <%}%>
-          <div class="login_part_form">
-            <div class="login_part_form_iner">
-              <h3 class="text-center">Login with OTP</h3>
-              <form
-                class="row contact_form"
-                action="/sendOTP"
-                method="post"
-                novalidate="novalidate"
-              >
-                <div class="col-md-12 form-group p_star">
-                  <input
-                    type="tel"
-                    class="form-control"
-                    id="name"
-                    name="phone"
-                    value=""
-                    placeholder="Phone"
-                  />
-                </div>
-  
-                <div class="col-md-12 form-group">
-                  <button type="submit" value="submit" class="btn_3">
-                    Send OTP
-                  </button>
-                </div>
-              </form>
-  
-              <form
-                class="row contact_form"
-                action="/verifyOTP"
-                method="post"
-                novalidate="novalidate"
-              >
-                <div class="col-md-12 form-group p_star">
-                  <input
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="block text-center">
+            <a class="logo" href="index.html">
+              <img src="images/logo.png" alt="">
+            </a>
+            <h2 class="text-center pt-5">LOGIN WITH OTP</h2>
+            <form class="text-left clearfix" action="/sendotp" method="post" >
+              <div class="form-group">
+                <input   type="tel"
+                class="form-control"
+                id="name"
+                name="phone"
+                value=""
+                placeholder="Phone">
+
+              </div>
+              <!-- <div class=" button-otp col-md-12 form-group"> -->
+                <button type="submit" value="submit" class="btn btn-primary" >
+                  Send OTP
+                </button>
+              <!-- </div> -->
+            </form  >
+            <% if(locals.message){%>
+              <div id="msg" class="alert alert-success text-center">
+                 <%= message %>
+              </div>
+              <% } %>
+            <form
+            class="row contact_form"
+            action="/verifyotp"
+            method="post"
+            novalidate="novalidate"
+          >
+              <div class="form-group-1">
+                <input
                     type="tel"
                     class="form-control"
                     id="otp"
                     name="otp"
                     value=""
-                    placeholder="Enter OTP"
-                  />
-                </div>
-                <div class="col-md-12 form-group">
-                  <button type="submit" value="submit" class="btn_3">
-                    log in
-                  </button>
-                </div>
-              </form>
-            </div>
+                    placeholder="Enter OTP">
+              </div>
+              
+              <div class="otp-login col-md-12 form-group pt-2">
+                <button type="submit" value="submit" class="btn btn-nasv text-center"style="align-items: center;" >
+                  log in
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!--================login_part end =================-->
-  
   <script>
-    setTimeout(() => {
-      document.getElementById("msg").style.display = "none";
-    }, 1000);
+     setTimeout(()=>{
+      document.getElementById('message').style.display='none'
+    },2000)
   </script>
+ 
 <%-include('../partials/user-footer')%>

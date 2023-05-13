@@ -43,6 +43,10 @@
                             <label for="exampleInputPassword1" class="form-label">price</label>
                             <input type="number" class="form-control" name="price" value="<%= prod.price %>" />
                         </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Stock</label>
+                            <input type="number" class="form-control" name="stock" value="<%= prod.stock %>" />
+                        </div>
 
                         <div class="form-group mt-3">
                             <label for="image">Photo file:</label>
@@ -63,7 +67,26 @@
                                         </option>
                                         <% }); %>
                                 </select>
+                                
                             </button>
+                            
+                        </div>
+                        <div class="form-group dropdown mt-4">
+                            <button type="button" class="btn btn-light" data-toggle="dropdown">
+                                Description
+                                <select name="description">
+                                    <% description.forEach(function(product) { %>
+                                        <option value="<%= product.description %>" <% if
+                                            (product.description===prod.description) { %>
+                                            selected
+                                            <% } %>>
+                                                <%= product.description %>
+                                        </option>
+                                        <% }); %>
+                                </select>
+                                
+                            </button>
+                            
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-5">

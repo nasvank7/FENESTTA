@@ -1,10 +1,13 @@
 const mongoose=require("mongoose")
 
+
 var categorySchema=new mongoose.Schema({
 
     category:{
+       
         type:String,
-        require:true
+        require:true,
+        unique:true
        
     },
     description:{
@@ -15,6 +18,7 @@ var categorySchema=new mongoose.Schema({
     }
   
 })
+
 
 const Category = new mongoose.model("category",categorySchema);
 

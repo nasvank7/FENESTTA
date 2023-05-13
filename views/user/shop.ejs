@@ -8,11 +8,14 @@
 				<h2>Trendy Products</h2>
 			</div>
 		</div>
+		
 		<div class="row">
 			<% product.forEach(function(product){%>
+				<% if(product.Blocked){ %>	
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
+						
 						<span class="bage">Sale</span>
 						<img class="img-responsive" src="<%=product.photo %>" alt="product-img" />
 						<div class="preview-meta">
@@ -26,21 +29,68 @@
 			                        <a href="#!" ><i class="tf-ion-ios-heart"></i></a>
 								</li>
 								<li>
-									<a href="#!"><i class="tf-ion-android-cart"></i></a>
+									<a href="/add-to-cart/<%= product._id %>"><i class="tf-ion-android-cart"></i></a>
 								</li>
 							</ul>
                       	</div>
 					</div>
 					<div class="product-content">
 						<h4><a href="/single/<%=product._id %>"><%= product.name %></a></h4>
-						<p class="price"><%= product.price %></p>
-						<p class="price"><%= product.category_name %></p>
+						<p class="product-price">$ <%= product.price %></p>
+						<p class="category-s"><%= product.category_name %></p>
 					</div>
 				</div>
 			</div>
+			<% } %>
 			<% }) %>
 		</div>
 	</div>
 </section>
+<footer class="footer section text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="social-media">
+					<li>
+						<a href="https://www.facebook.com/themefisher">
+							<i class="tf-ion-social-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/themefisher">
+							<i class="tf-ion-social-instagram"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.twitter.com/themefisher">
+							<i class="tf-ion-social-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.pinterest.com/themefisher/">
+							<i class="tf-ion-social-pinterest"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="footer-menu text-uppercase">
+					<li>
+						<a href="contact.html">CONTACT</a>
+					</li>
+					<li>
+						<a href="shop.html">SHOP</a>
+					</li>
+					<li>
+						<a href="pricing.html">Pricing</a>
+					</li>
+					<li>
+						<a href="contact.html">PRIVACY POLICY</a>
+					</li>
+				</ul>
+				<!-- <p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p> -->
+			</div>
+		</div>
+	</div>
+</footer>
+
 
 <%-include('../partials/user-footer')%>

@@ -14,7 +14,17 @@
     z-index: 99;
 }
 
+.form-control-1{
+    
+    height: 10px;
+    
+    
+}
+.sub-1{
+    margin-top: -31px;
+    margin-left: 282px;
 
+}
 /*** Spinner ***/
 #spinner {
     opacity: 0;

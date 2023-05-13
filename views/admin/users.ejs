@@ -1,17 +1,33 @@
 <%-include('../partials/admin-header')%>
 
 
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> -->
+
+
 <!-- Table Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
+      <div class="col-sm-3 col-xl-2 w-100">
+        <!-- <a href="/add_product_page"><button>Add Product</button></a>  -->
+        <form action="/Search" method="get" class="d-flex flex-column justify-content-center align-items-center ms-4">
+          <div class="input-group mb-2 w-100 d-flex justify-content-center " >
+            <input class="form-control bg-dark border-0" style="max-width: 300px;" name="query" type="search" placeholder="Search">
+            <button class="btn btn-primary mt-2" type="submit">Search</button>
+          </div>
+        </form>
+        
+        
+      </div>
       <div class="col-12">
         <% if(locals.msg) { %>
         <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
         <%}%>
         <div class="bg-secondary rounded h-100 p-4">
-          <h6 class="mb-4">User Data</h6>
+          <h6 class="mb-4">Users Data</h6>
           <div class="table-responsive">
-            <table class="table">
+            <table id="myTable" class="table">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -26,20 +42,21 @@
               <tbody>
                 <% user_data.forEach(function(user,index) { %>
                 <tr>
-                  <td><%= index+1 %></td>
-                  <td><%= user.name %></td>
-                  <td><%= user.email %></td>
-                  <td><%= user.phone %></td>
-                  <td>
+                  <td style="background-color: #191C24;"><%= index+1 %></td>
+                  <td style="background-color: #191C24;"><%= user.name %></td>
+                  <td style="background-color: #191C24;"><%= user.email %></td>
+                  <td style="background-color: #191C24;"><%= user.phone %></td>
+                  <td style="background-color: #191C24;">
                     <% if(user.isBlocked){ %>
                     <a
                       href="/unblock_user/<%= user._id %>"
                       class="btn border-shadow update"
-                    >
+                   
+                    > 
                       <span class="text-gradient"
                         ><i class="fas fa-lock"></i
                       ></span>
-                    </a>
+                      </a>
                     <% } else{ %>
   
                     <a
@@ -68,6 +85,15 @@
     setTimeout(() => {
       document.getElementById("msg").style.display = "none";
     }, 1000);
+    
+  
+    // $(document).ready(function() {
+    //   $('#myTable').DataTable();
+    // })
+    // let table= new DataTable('#myTable')
+   
   </script>
+
+  
   
 <%-include('../partials/admin-footer')%>

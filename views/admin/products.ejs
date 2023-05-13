@@ -6,10 +6,18 @@
 <!-- Table Start -->
 <div class="container-fluid pt-4 px-4">
   <div class="row g-4">
-    <div class="col-sm-3 col-xl-2">
-      <a href="/add_product_page"><button>Add Product</button></a>
+    <div class="col-sm-3 col-xl-2 w-100">
+      <a href="/add_product_page"><button  style="background-color: #EB1616; color: white;">Add Product</button></a>
+      <form action="/search" method="post" class="d-flex flex-column justify-content-center align-items-center ms-4">
+        <div class="input-group mb-2 w-100  d-flex justify-content-center " >
+          <input class="form-control bg-dark border-0" style="max-width: 300px;" name="search" type="search" placeholder="Search">
+          <button class="btn btn-primary mt-2" type="submit">Search</button>
+        </div>
+      </form>
+      
+      
     </div>
-
+  
     <div class="col-12">
       <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">product Data</h6>
@@ -21,27 +29,50 @@
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col">Stock</th>
                 <th scope="col">Photo</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
               <% product_data.forEach(function(product, index) { %>
+
                 <tr>
                   <td><%= index + 1 %></td>
                   <td><%= product.name %></td>
                   <td><%= product.price %></td>
                   <td><%= product.category_name %></td>
+                  <td><%= product.description %></td>
+                  <td><%= product.stock %></td>
                   <td>
-                    <img class="img-thumbnail" width="100px" src="<%= product.photo %>">
+                    <img class="img-thumbnail" width="100px" src="<%= product.photo[0] %>">
                   </td>
                   <td>
                     <a href="/update_product/<%= product._id %>" class="btn border-shadow update">
                       <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                     </a>
-                    <a href="/delete_product/<%=product._id%>" class="btn border-shadow delete">
-                      <span class="text-gradient"><i class="fas fa-times"></i></span>
+                        <% if(product.Blocked){ %>
+                    <a
+                      href="/redo/<%= product._id %>"
+                      class="btn border-shadow update"
+                    >
+                      <span class="text-gradient"
+                        ><i class="fas fa-unlock"></i
+                      ></span>
                     </a>
+                    <% } else{ %>
+  
+                    <a
+                      href="/undo/<%= product._id %>"
+                      class="btn border-shadow update"
+                    >
+                      <span class="text-gradient"
+                        ><i class="fas fa-lock"></i
+                      ></span>
+                    </a>
+  
+                    <% } %>
                   </td>
                 </tr>
               <% }) %>

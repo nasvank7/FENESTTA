@@ -14,9 +14,9 @@
                 <input type="text" class="form-control" name="name" placeholder=" Name">
               </div>
              
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <input type="text" class="form-control" name="username"  placeholder="Username">
-              </div>
+              </div> -->
               <div class="form-group">
                 <input type="email" class="form-control"  name="email" placeholder="Email">
               </div>
@@ -24,8 +24,16 @@
                 <input type="password" class="form-control" name="password" placeholder="Password">
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="phone" placeholder="Phone number">
+                <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password">
               </div>
+              <div class="form-group">
+                <input type="tel" class="form-control" name="phone" placeholder="Phone number">
+              </div>
+              <% if(locals.msg){%>
+                <div id="msg1" class="alert alert-danger text-center">
+                   <%= msg %>
+                </div>
+                <% } %>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center">Sign In</button>
               </div>
@@ -38,12 +46,18 @@
     </div>
   </section>
   <script>
+
+setTimeout(()=>{
+      document.getElementById('msg1').style.display='none'
+    },2000)
     function validateBasic() {
  
     var name = document.forms["basic"]["name"].value.trim();
     var email = document.forms["basic"]["email"].value.trim();
-    var username =document.forms['basic']['username'].value.trim()
+    // var username =document.forms['basic']['username'].value.trim()
     var password = document.forms["basic"]["password"].value;
+    var confirmpassword = document.forms["basic"]["confirmpassword"].value;
+    var phone = document.forms["basic"]["phone"].value.trim();
 
     // Validation for name field
     if (name == "") {
@@ -67,20 +81,34 @@
         }
     }
    //validation for username
-     if (username == "") {
-        alert("Username must be filled out");
-        return false;
-    }
+    //  if (username == "") {
+    //     alert("Username must be filled out");
+    //     return false;
+    // }
 
 
     // Validation for password field
-    if (password == "") {
-        alert("Password must be filled out");
+    // if (password == "") {
+    //     alert("Password must be filled out");
+    //     return false;
+    // }
+
+    if (password.length < 8) {
+      alert("Password should be at least 8 characters long.");
+      return false;
+    }
+      // Validation for password field
+      if (confirmpassword !== password) {
+        alert("password is not matching confirm the password");
         return false;
     }
-
+    if (phone == "") {
+        alert("Phonenumber must be filled out");
+        return false;
+    }
     return true; // form is valid
 }
+
   </script>
 <%-include('../partials/user-footer')%>
 

@@ -14,12 +14,14 @@ var usersSchema=new mongoose.Schema({
     email:{
         type:String,
         require:true,
+        unique:true
        
        
     },
     phone:{
         type:Number,
         require:true,
+        unique:true
        
        
     },

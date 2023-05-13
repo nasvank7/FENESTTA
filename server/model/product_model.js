@@ -13,17 +13,32 @@ var productSchema=new mongoose.Schema({
        
        
     },
-    photo:{
+    photo:[{
         type:String,
         require:true,
        
        
-    },
+    }],
     category_name:{
         type: mongoose.Schema.Types.ObjectId,
         type:String,
         ref: 'category',
+    },
+    stock:{
+        type:Number,
+        require:true
+
     }
+    ,
+    description:{
+       type:String,
+       require:true
+    },
+    Blocked:{
+        default:false,
+        type:Boolean
+    }
+
   
 })
 

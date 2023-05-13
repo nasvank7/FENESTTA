@@ -9,13 +9,23 @@
               <img src="images/logo.png" alt="">
             </a>
             <h2 class="text-center">Welcome Back</h2>
-            <form class="text-left clearfix" action="/login" method="post" >
+            <form class="text-left clearfix" action="/login" method="post"  onsubmit="return validateBasic()"  >
               <div class="form-group">
                 <input type="email" class="form-control" name="email"  placeholder="Email">
               </div>
               <div class="form-group">
                 <input type="password" class="form-control" name="password" placeholder="Password">
               </div>
+              <% if(locals.message){%>
+                <div id="msg" class="alert alert-danger text-center">
+                   <%= message %>
+                </div>
+                <% } %>
+                <% if(locals.msg){%>
+                  <div id="msg1" class="alert alert-danger text-center">
+                     <%= msg %>
+                  </div>
+                  <% } %>
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>
                 
@@ -31,4 +41,52 @@
       </div>
     </div>
   </section>
+  <script>
+    setTimeout(()=>{
+      document.getElementById('msg').style.display='none'
+    },2000)
+
+    setInterval(()=>{
+      document.getElementById('msg1').style.display='none'
+    },2000)
+
+
+    function validateBasic() {
+ 
+
+ var email = document.forms["basic"]["email"].value.trim();
+
+ var password = document.forms["basic"]["password"].value;
+
+
+
+
+
+
+ // Validation for email field
+ if (email == "") {
+     alert("Email must be filled out");
+     return false;
+ } else {
+     // regex for email validation
+     var email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+     if (!email_regex.test(email)) {
+         alert("Invalid email address");
+         return false;
+     }
+ }
+//validation for username
+
+
+ // Validation for password field
+ if (password == "") {
+     alert("Password must be filled out");
+     return false;
+ }
+ 
+ 
+ return true; // form is valid
+}
+  </script>
 <%-include('../partials/user-footer')%>

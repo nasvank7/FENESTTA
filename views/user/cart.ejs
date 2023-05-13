@@ -1,0 +1,149 @@
+
+<%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Cart</h1>
+					<ol class="breadcrumb">
+						<li><a href="/">Home</a></li>
+						<li class="active">cart</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<div class="page-wrapper">
+  <div class="cart shopping">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="block">
+            <div class="product-list">
+              <form method="post">
+				
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="">Item Name</th>
+                      <th class="">Item </th>
+                      <th class="">quantity</th>
+                      <th class="">Price</th>
+                      <th class="">Total</th>
+                      <th class="">Remove</th>
+					
+                    </tr>
+                  </thead>
+                  <tbody>
+					
+                    <% products.forEach(function(product) { %>
+                 
+						
+                    <tr class="">
+						<td> <a href="#!"><%= product.productId.name %></a></td>
+                      <td class="">
+						 
+						  <div class="product-info">
+							  <img width="80" src="<%= product.productId.photo %>" alt="" />
+                        </div>
+                      </td>
+
+                      <td class="">
+						<button class="cart-item-count mr-3 decrement-btn"onclick="changeQuantity('<%= product.productId %>','<%= cartId %>',-1)">-</button>
+						<%= product.quantity %>
+						<button class="cart-item-count ml-3 increment-btn" onclick="changeQuantity('<%= product.productId %>','<%= cartId %>',1)">+</button>
+					  </td>
+					  
+                      <td class=""><%= product.productId.price %></td>
+					  <td class=""></td>
+                      <td class="product-remove" onclick="">
+                            Remove
+                      </td>
+                    </tr>
+                    <% }); %>
+                  </tbody>
+                </table>
+				<div class="float-end total-container">
+					<h5 class="subtotal-heading">SUB TOTAL :</h5>
+				  </div>
+                <a href="checkout.html" class="btn btn-main pull-right">Checkout</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="footer section text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="social-media">
+					<li>
+						<a href="https://www.facebook.com/themefisher">
+							<i class="tf-ion-social-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/themefisher">
+							<i class="tf-ion-social-instagram"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.twitter.com/themefisher">
+							<i class="tf-ion-social-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.pinterest.com/themefisher/">
+							<i class="tf-ion-social-pinterest"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="footer-menu text-uppercase">
+					<li>
+						<a href="contact.html">CONTACT</a>
+					</li>
+					<li>
+						<a href="shop.html">SHOP</a>
+					</li>
+					<li>
+						<a href="pricing.html">Pricing</a>
+					</li>
+					<li>
+						<a href="contact.html">PRIVACY POLICY</a>
+					</li>
+				</ul>
+				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
+			</div>
+		</div>
+	</div>
+
+</footer>
+
+<script>
+	function changeQuantity(cartId,productId,count){
+		$.ajax({
+			url:'/changeQuantity',
+			data:{
+				cart:cartId,
+				product:productId,
+				count:count
+			},
+			method:'post',
+			success:(response)=>{
+				alert(response)
+			}
+		})
+	}
+</script>
+<%-include('../partials/user-footer')%>
