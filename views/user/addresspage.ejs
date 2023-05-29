@@ -1,0 +1,111 @@
+<%-include('../partials/user-header')%> <%-include('../partials/user-nav')%>
+
+<div class="page-wrapper">
+  <div class="checkout shopping">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="block billing-details">
+            <h4 class="widget-title">Add Address</h4>
+            <form class="checkout-form" action="/checkout" method="post">
+              <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input
+                name="name"
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder=""
+                />
+              </div>
+              <div class="form-group">
+                <label for="user_address">Address</label>
+                <input
+                name="address"
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  placeholder=""
+                />
+              </div>
+              <div class="checkout-country-code clearfix">
+                <div class="form-group">
+                  <label for="user_post_code">Phone number</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="user_post_code"
+                    name="phone"
+                    value=""
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="user_city">Pin code</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="user_city"
+                    name="pincode"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+               <label for="user_country">City</label>
+               <input
+               name="city"
+                 type="text"
+                 class="form-control"
+                 id="user_country"
+                 placeholder=""
+               />
+             </div>
+              <div class="form-group">
+                <label for="user_country">State</label>
+                <input
+                name="state"
+                  type="text"
+                  class="form-control"
+                  id="user_country"
+                  placeholder=""
+                />
+              </div>
+
+              <div style="width: 30px!important;">
+                <button type="submit" class="btn btn-main">ADD</button>
+              </div>
+            </form>
+          </div>
+         </div>
+          <div class="col-md-4">
+            <div class="product-checkout-details">
+               <div class="block">
+                  <h4 class="widget-title">Existing Address</h4>
+                  <form class="contact_form">
+                    <% addressofdelivery.forEach(function(address,index) { %>
+                      
+                      <div class="col-md-12 form-group">
+                      <h5 style="text-decoration: underline;"> Address: <%= index+1 %></h5>
+                      <p><%= address.name %></p>
+                      <p><%= address.address %></p>
+                      <p><%= address.phone %></p>
+                      <p><%= address.pincode %></p>
+                      <p><%= address.city %></p>
+                      <p><%= address.state %></p>
+                      <a href="/checkout/<%= address._id %>" class="primary-btn" >Deliver here</a>       
+                    </div>
+                  </form>
+                  <% }); %>
+                 
+                
+                
+               </div>
+            </div>
+         </div>
+        </div>
+     
+    </div>
+  </div>
+</div>
+
+<%-include('../partials/user-footer')%>

@@ -9,9 +9,12 @@ const bcrypt = require("bcrypt");
 const userSchema = require("../model/model");
 const productSchema = require("../model/product_model");
 const CartSchema=require('../model/cart')
+const AddressSchema=require('../model/address')
 const session = require("express-session");
 const fs = require("fs");
 const { homedir } = require("os");
+const { ObjectId } = require("mongodb-legacy");
+const { log } = require("console");
 //to get index
 exports.index = async(req, res) => {
   const product = await productSchema.find().limit(6);
@@ -102,6 +105,7 @@ exports.dologin = async (req, res, next) => {
 //to logout
 exports.logout = (req, res) => {
   req.session.user=false;
+  req.session.destroy()
   res.redirect('/')
 };
 //to get product
@@ -187,8 +191,8 @@ exports.verifyotp = async (req, res) => {
 };
 
 exports.getCart=async(req,res)=>{
-
-  let userId=req.session.user?._id
+  try {
+     let userId=req.session.user?._id
   let user= req.session.user
   let cart= await CartSchema.findOne({user:userId}).populate(
     "products.productId"
@@ -196,11 +200,18 @@ exports.getCart=async(req,res)=>{
   if (cart) {
     let products=cart.products
     let cartId=cart._id
-    res.render('user/cart',{user,products,cartId})
+    res.render('user/cart',{user,products,userId})
   } else {
     res.render('user/emptyCart',{user})
   }
 
+    // Code for fetching cart data and rendering view
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while processing your request.");
+  }
+  
+ 
  
 
   // res.render('user/cart',{user,products})
@@ -241,6 +252,204 @@ exports.addtocart = async (req, res) => {
 };
 
 
-exports.changeQuantity = async (req, res, next) => {
- 
+exports.updateQuantity = async (req, res, next) => {
+  const userId = req.session.user?._id;
+  const cartItemId = req.body.cartItemId;
+
+  try {
+    const cart = await CartSchema.findOne({ user: userId }).populate("products.productId")
+    console.log(cart,cartItemId);
+    console.log(',jsdvfksjd');
+
+    const cartIndex = cart.products.findIndex((item) => item.productId.equals(cartItemId));
+     console.log(cartIndex);
+     console.log('xdjfb');
+    if (cartIndex === -1) {
+      return res.json({ success: false, message: "Cart item not found." });
+    }
+
+    cart.products[cartIndex].quantity += 1;
+    await cart.save();
+
+    console.log(cart.products[cartIndex].quantity);
+    console.log(cart.products[cartIndex].price);
+    // console.log(cart.product[cartIndex]);
+    const total = cart.products[cartIndex].quantity* cart.products[cartIndex].productId.price;
+    const quantity = cart.products[cartIndex].quantity;
+    console.log(total);
+    console.log(quantity);
+
+    res.json({
+      success: true,
+      message: "Quantity updated successfully.",
+      total,
+      quantity,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Failed to update quantity." });
+  }
 };
+exports.decrementQuantity=async(req,res,next)=>{
+  const userId = req.session.user?._id;
+  const cartItemId = req.body.cartItemId;
+  console.log("456");
+  console.log(userId);
+  console.log("123");
+
+  try {
+    const cart = await CartSchema.findOne({ user: userId }).populate("products.productId")
+    console.log(cart,cartItemId);
+    console.log(',jsdvfksjd');
+
+    const cartIndex = cart.products.findIndex((item) => item.productId.equals(cartItemId));
+     console.log(cartIndex);
+     console.log('xdjfb');
+    if (cartIndex === -1) {
+      return res.json({ success: false, message: "Cart item not found." });
+    }
+
+    cart.products[cartIndex].quantity -= 1;
+    await cart.save();
+
+    console.log(cart.products[cartIndex].quantity);
+    console.log(cart.products[cartIndex].price);
+    // console.log(cart.product[cartIndex]);
+    const total = cart.products[cartIndex].quantity* cart.products[cartIndex].productId.price;
+    const quantity = cart.products[cartIndex].quantity;
+    console.log(total);
+    console.log(quantity);
+
+    res.json({
+      success: true,
+      message: "Quantity updated successfully.",
+      total,
+      quantity,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Failed to update quantity." });
+  }
+//   console.log('xkbdsjn f');
+//   const cartItemId = req.body.cartItemId;
+// console.log(cartItemId);
+//   try {
+//     const cartItem = await CartSchema.findById(cartItemId);
+//     console.log(cartItem);
+//     cartItem.quantity -= 1;
+//     await cartItem.save();
+//     const total = cartItem.quantity * cartItem.price;
+//     const quantity = cartItem.quantity;
+
+//     res.json({
+//       success: true,
+//       message: "Quantity updated successfully.",
+//       total,
+//       quantity,
+//     });
+//   } catch (err) {
+//     res.json({ success: false, message: "Failed to update quantity." });
+//   }
+};
+//  exports.deleteproduct=async(req,res)=>{
+ 
+// try {
+//   let userId=req.session.user._id
+//   let id=req.params.id
+
+//   const result =await CartSchema.findOneAndUpdate(
+//     { user:userId },
+//     { $pull: { products: { _id: id } } },
+//     { new: true })
+//     if(result)
+//       {
+      
+//         res.redirect("/cart");
+//       } else{
+//         res.redirect('/cart')
+//       }
+      
+  
+    
+   
+// } catch (error) {
+//   res.status(500).send(err.message); 
+
+// }
+// }
+ exports.productRemove=async(req,res)=>{
+  console.log('eivvedh');
+  try {
+    let {productId}=req.body
+    let userId=req.session.user?._id
+    const userProduct=await productSchema.findById(productId).select('price')
+    console.log(userProduct);
+    if(!userProduct){
+      res.send({message:'product not found'})
+    }
+    const userCart=await CartSchema.findOne({user:userId})
+    console.log(userCart,'sdfhsdgfdsjhgfjhgsjdghf');
+    const productCount=userCart.products.length-1
+    if(userCart){
+      const itemIndex=userCart.products.findIndex((item)=> item.productId.equals(productId))
+
+      if(itemIndex>-1){
+        userCart.products.splice(itemIndex,1)
+        await userCart.save()
+        res.json ({status:true,message:'product removed from cart',length:productCount})
+      }else{
+        res.json ({status:false,message:"product not found"})
+      }
+    }else{
+      res.json ({status:false,message:"cart not found"})
+    }
+  
+  } catch (error) {
+    console.log(error);
+  }
+ }
+ exports.checkOut=async(req,res)=>{
+  try {
+    let user=req.session.user
+    //problem her
+    var addressofdelivery = await AddressSchema.find().exec();
+      res.render('user/addresspage', { user,addressofdelivery });
+    
+  } catch (error) {
+    console.log(error);
+  }
+ }
+ exports.Addaddress = async (req, res) => {
+  try {
+    let user = req.session.user;
+    console.log('hjgcjv');
+    const existingAddress = await AddressSchema.findOne({
+      $or: [{ address: req.body.address }, { phone: req.body.phone }]
+    });
+
+    if (existingAddress) {
+      // User with given email or phone already exists
+      res.render("user/addresspage", { user, msg: "Address already exists" });
+      console.log('already');
+    } else {
+      console.log('jsvhfalsjfn');
+      const address = new AddressSchema({
+        name: req.body.name,
+        address: req.body.address,
+        phone: req.body.phone,
+        pincode: req.body.pincode,
+        city: req.body.city,
+        state: req.body.state,
+      });
+      console.log(address);
+      
+      await address.save();
+      
+      var addressofdelivery = await AddressSchema.find().exec();
+      res.render('user/addresspage', { user,addressofdelivery:addressofdelivery });
+    }
+  } catch (error) {
+    console.log(error);
+    // res.send({ message: "Error occurred while registering" });
+  }
+};
+
+ 

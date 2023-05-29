@@ -146,7 +146,9 @@ exports.addProduct = async (req, res) => {
 // to add category
   exports.add_category=async(req,res)=>{
     try {
-      const existingCategory =await categorySchema.find({category:req.body.category})
+      let category=req.body.category
+      const existingCategory =await categorySchema.findOne({category:category})
+      // console.log(existingCategory)
       if(existingCategory){
         return res.send('<script>alert("Category already exists"); window.location.href = "/category_page";</script>')
       }else{
