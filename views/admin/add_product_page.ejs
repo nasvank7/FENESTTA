@@ -7,7 +7,7 @@
     <div class="col-sm-12 col-xl-6">
       <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">Add Product</h6>
-        <form action="/add_product" method="POST" enctype="multipart/form-data">
+        <form action="/add_product" method="POST" name="basic" enctype="multipart/form-data" onsubmit="return ValidateBasic()" >
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Name</label>
             <input
@@ -26,6 +26,10 @@
               id="exampleInputPassword1"
             />
           </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Stock</label>
+            <input type="number" class="form-control" name="stock" value="" />
+        </div>
 
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">photo</label>
@@ -50,7 +54,7 @@
             </button>
           </div>
 
-          <button type="submit" class="btn btn-primary mt-5">
+          <button type="submit" class="btn btn-primary mt-5"  >
             Add Product
           </button>
         </form>
@@ -59,5 +63,32 @@
   </div>
 </div>
 <!-- Form End -->
+<script>
+  function ValidateBasic(){
+    
+    var name = document.forms["basic"]["name"].value.trim();
+   
+  
+    var price = document.forms["basic"]["price"].value.trim()
+    var stock = document.forms["basic"]["stock"].value.trim()
+  
+
+    if (name == "") {
+      alert("name must be filled out");
+        return false;
+    }
+    var priceRegex = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/;
+  if (!priceRegex.test(price)) {       
+      alert("Invalid price address.");         
+      return false;    
+  }
+        if (stock=="") {
+          alert("stock must be filled out");
+      return false;
+    }
+    return true; 
+}
+  
+</script>
 
 <%- include('../partials/admin-footer') %>

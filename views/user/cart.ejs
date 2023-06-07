@@ -1,23 +1,19 @@
-
-<%-include('../partials/user-header')%>
-<%-include('../partials/user-nav')%>
+<%-include('../partials/user-header')%> <%-include('../partials/user-nav')%>
 <section class="page-header">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="content">
-					<h1 class="page-name">Cart</h1>
-					<ol class="breadcrumb">
-						<li><a href="/">Home</a></li>
-						<li class="active">cart</li>
-					</ol>
-				</div>
-			</div>
-		</div>
-	</div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name">Cart</h1>
+          <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li class="active">cart</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
-
-
 
 <div class="page-wrapper">
   <div class="cart shopping">
@@ -26,81 +22,116 @@
         <div class="col-md-8 col-md-offset-2">
           <div class="block">
             <div class="product-list">
-          
-				
-				<% if (products.length===0) { %>
-				 <div id="noItems">no items</div>
-				<% }else{ %>
+              <% if (products.length===0) { %>
                 <table class="table" id="cartTable">
                   <thead>
                     <tr>
                       <th class="">Item Name</th>
-                      <th class="">Item </th>
+                      <th class="">Item</th>
                       <th class="">quantity</th>
                       <th class="">Price</th>
                       <th class="">Total</th>
                       <th class="">Remove</th>
-					
                     </tr>
                   </thead>
-                  <tbody>
+                  </table>
+              <div id="noItems">
+                <h1 style="text-align: center;">empty cart</h1>
+                <h2 style="text-align: center;">Continue Shopping</h2>
+              </div>
+              <% }else{ %>
+              <table class="table" id="cartTable">
+                <thead>
+                  <tr>
+                    <th class="">Item Name</th>
+                    <th class="">Item</th>
+                    <th class="">quantity</th>
+                    <th class="">Price</th>
+                    <th class="">Total</th>
+                    <th class="">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% products.forEach(function(product) { %>
 
-					  <% products.forEach(function(product) { %>
-						
-						
-						<tr class="" id="remove_<%= product.productId._id %>">
-						<td> <a href="#!"><%= product.productId.name %></a></td>
-                      <td class="">
-						 
-						  <div class="product-info">
-							  <img width="80" src="<%= product.productId.photo %>" alt="" />
-                        </div>
-					</td>
-					<td>
-						<button class="cart-item-count mr-4" id="decrement_<%= product.productId._id %>"
-							onclick="decrementQuantity('<%= product.productId._id %>')">-</button>
-							<span id="quantity_<%= product.productId._id %>" name="quantity"><%= product.quantity %></span>
-							<button class="cart-item-count mr-4" id="increment_<%= product.productId._id %>"
-								onclick="incrementQuantity('<%= product.productId._id %>')">+</button>
-							</td>
-							
-							<td class=""><%= product.productId.price %></td>
-							<td class="total price">
-								<% var total = product.quantity * product.productId.price; %>
-								<h5 id="product-total-price-<%= product.productId._id %>" class="item-total"><%= total %></h5>
-							</td>
-							<td>
-								<button class="btn btn-danger" id="Remove" onclick="productRemove('<%= product.productId._id %>')"> Remove </button>
-							</td>
-							
-						</tr>
-						<% }); %>
-					</tbody>
-                </table>
-				<div class="float-end total-container">
-					<td><h5 class="subtotal-heading">SUB TOTAL :</h5></td>
-					<td>
-						<h5> <span id="subtotal"></span></h5>
-					</td>
-					
-					
-					
-					
-				</div>
-				<%}%>
+                  <tr class="" id="remove_<%= product.productId._id %>">
+                    <td><a href="#!"><%= product.productId.name %></a></td>
+                    <td class="">
+                      <div class="product-info">
+                        <img
+                          width="80"
+                          src="<%= product.productId.photo[0] %>"
+                          alt=""
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <button
+                        class="cart-item-count mr-4"
+                        id="decrement_<%= product.productId._id %>"
+                        onclick="decrementQuantity('<%= product.productId._id %>')"
+                      >
+                        -
+                      </button>
+                      <span
+                        id="quantity_<%= product.productId._id %>"
+                        name="quantity"
+                        ><%= product.quantity %></span
+                      >
+                      <button
+                        class="cart-item-count mr-4"
+                        id="increment_<%= product.productId._id %>"
+                        onclick="incrementQuantity('<%= product.productId._id %>')"
+                      >
+                        +
+                      </button>
+                    </td>
 
-				  <div class="col-md-6">
-					<a href="/shop" class="btn btn-main pull-right">CONTINUE SHOPPING</a>
-				   </div>
-              
-					<div class="col-md-6">
-						<a href="/checkout" class="btn btn-main pull-right">Checkout</a>
-						
-					   </div>
-					  
-				
-               
-        
+                    <td class="">$ <%= product.productId.price %></td>
+                    <td class="total price">
+                      <% var total = product.quantity * product.productId.price;
+                      %>
+                  <h5
+                        id="product-total-price-<%= product.productId._id %>"
+                        class="item-total"
+                      >
+                        <%= total %>
+                      </h5>
+                    </td>
+                    <td>
+                      <button
+                        class="btn btn-danger"
+                        id="Remove"
+                        onclick="confirmProductRemove('<%= product.productId._id %>')"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <div class="float-end total-container">
+                <td>
+                  <h5 class="subtotal-heading">
+                    SUB TOTAL :<span>$</span> <span id="subtotal"></span>
+                  </h5>
+                </td>
+                <td>
+                  <h5></h5>
+                </td>
+              </div>
+              <%}%>
+
+              <div class="col-md-6">
+                <a href="/shop" class="btn btn-main pull-right"
+                  >CONTINUE SHOPPING</a
+                >
+              </div>
+
+              <div class="col-md-6">
+                <a href="/address" class="btn btn-main pull-right">Checkout</a>
+              </div>
             </div>
           </div>
         </div>
@@ -109,147 +140,177 @@
   </div>
 </div>
 
-
 <footer class="footer section text-center">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<ul class="social-media">
-					<li>
-						<a href="https://www.facebook.com/themefisher">
-							<i class="tf-ion-social-facebook"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.instagram.com/themefisher">
-							<i class="tf-ion-social-instagram"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.twitter.com/themefisher">
-							<i class="tf-ion-social-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a href="https://www.pinterest.com/themefisher/">
-							<i class="tf-ion-social-pinterest"></i>
-						</a>
-					</li>
-				</ul>
-				<ul class="footer-menu text-uppercase">
-					<li>
-						<a href="contact.html">CONTACT</a>
-					</li>
-					<li>
-						<a href="shop.html">SHOP</a>
-					</li>
-					<li>
-						<a href="pricing.html">Pricing</a>
-					</li>
-					<li>
-						<a href="contact.html">PRIVACY POLICY</a>
-					</li>
-				</ul>
-				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
-			</div>
-		</div>
-	</div>
-
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="social-media">
+          <li>
+            <a href="https://www.facebook.com/themefisher">
+              <i class="tf-ion-social-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/themefisher">
+              <i class="tf-ion-social-instagram"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.twitter.com/themefisher">
+              <i class="tf-ion-social-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.pinterest.com/themefisher/">
+              <i class="tf-ion-social-pinterest"></i>
+            </a>
+          </li>
+        </ul>
+        <ul class="footer-menu text-uppercase">
+          <li>
+            <a href="contact.html">CONTACT</a>
+          </li>
+          <li>
+            <a href="shop.html">SHOP</a>
+          </li>
+          <li>
+            <a href="pricing.html">Pricing</a>
+          </li>
+          <li>
+            <a href="contact.html">PRIVACY POLICY</a>
+          </li>
+        </ul>
+        <p class="copyright-text">
+          Copyright &copy;2021, Designed &amp; Developed by
+          <a href="#">Themefisher</a>
+        </p>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <script>
-	const setSubtotal=()=>{
-		const itemTotal=document.getElementsByClassName('item-total')
-		let subtotal=0;
-		for (let i = 0; i < itemTotal.length; i++) {
+  const setSubtotal = () => {
+    const itemTotal = document.getElementsByClassName("item-total");
+    let subtotal = 0;
+    for (let i = 0; i < itemTotal.length; i++) {
+      subtotal += Number(itemTotal[i].innerHTML);
+    }
+    document.getElementById("subtotal").innerHTML = subtotal;
+  };
+  setSubtotal();
 
-			subtotal+=Number(itemTotal[i].innerHTML)
-		}
-		document.getElementById('subtotal').innerHTML=subtotal;
+  function incrementQuantity(cartItemId) {
+    console.log(cartItemId);
+    $.ajax({
+      url: "/increaseQuantity",
+      method: "post",
+      data: { cartItemId: cartItemId },
+      success: function (data) {
+        if (data.success) {
+          console.log(data);
+          $(`#product-total-price-${cartItemId}`).text(data.total);
 
-	}
-	setSubtotal();
-	
-	function incrementQuantity(cartItemId){
-		console.log(cartItemId);
-		$.ajax({
-			url:'/increaseQuantity',
-			method:"post",
-			data:{cartItemId:cartItemId},
-			success:function(data){
-				if(data.success){
-					console.log(data);
-					$(`#product-total-price-${cartItemId}`).text(data.total)
-					
-					$(`#quantity_${cartItemId}`).text(data?.quantity)
-					
-					setSubtotal();
-				}else{
-					console.log('error');
-				}
-			},
-			error: function(jqXHR, textStatus, errorThrown){
-				console.error(errorThrown);
-			}
-		})
-	}
+          $(`#quantity_${cartItemId}`).text(data?.quantity);
 
-	function decrementQuantity(cartItemId) {
-	
-	  var currentQuantity = parseInt($(`#quantity_${cartItemId}`).text());
-	  if (currentQuantity > 1) {
-		$.ajax({
-		url: "/decreaseQuantity",
-		method: "post",
-		data: { cartItemId: cartItemId },
-		success: function(data) {
-		  // Handle success response here
-		  console.log(data);
-		  $(`#product-total-price-${cartItemId}`).text(data.total);
-		  $(`#quantity_${cartItemId}`).text(data?.quantity);
-		  setSubtotal();
-		  
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-		  // Handle error response here
-		  res.send('error')
-		}
-	  });
-	  }else{
-		$(`#quantity_${cartItemId}`).text(1);
-	  }
-	  
-	 
-	}
+          setSubtotal();
 
-	function productRemove(productId){
-		console.log(productId);
-		$.ajax({
-		    url:"/productRemove",
-			type:"post",
-			data:{productId:productId},
-			success:function(data){
-				console.log(data);
-				if(data.status){
-					console.log(data.message);
-					// const cartItem=document.querySelector(`tr[data-item-id="${productId}"]`)
-					const id=`remove_${productId}`
-					document.getElementById(id).remove()
-					setSubtotal();
-					if (data.length==0) {
-						document.getElementById('cartTable').style.display='none';
-						document.getElementById('noItems').style.display='block';
-					}
-					// location.reload();
-					// cartItem.remove()
-				}else{
-					console.log('error');
-				}
+        }else if(data.success==false){
+          
+          if (data.maxQuantity) {
+            Toastify({
+            text: "Stock Limit Exceeded",
+            className: "info",
+                style: {
+                background: "red",
+                
+              },
+              
+              position: "center",
+              gravity: "center"
+              }).showToast();
+      }
+      
+          
+          setSubtotal();
+          }
+         else {
+          console.log("error");
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error(errorThrown);
+      },
+    });
+  }
 
-			}	
-		})
-	}
-	</script>
-  
+  function decrementQuantity(cartItemId) {
+    var currentQuantity = parseInt($(`#quantity_${cartItemId}`).text());
+    if (currentQuantity > 1) {
+      $.ajax({
+        url: "/decreaseQuantity",
+        method: "post",
+        data: { cartItemId: cartItemId },
+        success: function (data) {
+          console.log(data);
+          $(`#product-total-price-${cartItemId}`).text(data.total);
+          $(`#quantity_${cartItemId}`).text(data?.quantity);
+          setSubtotal();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          res.send("error");
+        },
+      });
+    } else {
+      $(`#quantity_${cartItemId}`).text(1);
+    }
+  }
+
+  function confirmProductRemove(productId) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to remove this product from your cart.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        productRemove(productId);
+      }
+    });
+  }
+
+  function productRemove(productId) {
+    console.log(productId);
+    $.ajax({
+      url: "/productRemove",
+      type: "post",
+      data: { productId: productId },
+      success: function (data) {
+        console.log(data);
+        if (data.status) {
+          console.log(data.message);
+          const id = `remove_${productId}`;
+          document.getElementById(id).remove();
+          setSubtotal();
+          Swal.fire(
+            "Removed!",
+            "The product has been removed from your cart.",
+            "success"
+          );
+          if (data.length == 0) {
+            document.getElementById("cartTable").style.display = "none";
+            document.getElementById("noItems").style.display = "block";
+          }
+        
+        } else {
+          console.log("error");
+        }
+      },
+    });
+  }
+</script>
 
 <%-include('../partials/user-footer')%>

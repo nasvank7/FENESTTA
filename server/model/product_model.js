@@ -10,7 +10,7 @@ var productSchema=new mongoose.Schema({
     price:{
         type:Number,
         require:true,
-       
+        
        
     },
     photo:[{

@@ -7,6 +7,8 @@ const CartSchema = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    total:{type:String},
+
     products: [
       {
         productId: {
@@ -22,6 +24,7 @@ const CartSchema = new mongoose.Schema(
       },
     ],
   },
+  
   { timestamps: true }
 );
 const cart = new mongoose.model("Cart", CartSchema);

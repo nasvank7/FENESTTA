@@ -1,0 +1,84 @@
+<%- include ('../partials/user-header')%>
+<%- include ('../partials/user-nav')%>
+
+<section class="page-header" style="background-image: url('path/to/header-image.jpg');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name" style="font-family: 'Arial', sans-serif; font-size: 48px;">Wallet</h1>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">Cart</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+            <li><a class="active" href="/wallet">Wallet</a></li>
+            <li><a href="/userOrder">Orders</a></li>
+            <li><a href="/userAddress">Address</a></li>
+            <li><a   href="/userProfile">Profile Details</a></li>
+          </ul>
+        <div class="refunded-amount">
+          <p class="amount-label" style="font-size: 24px; color: #333;">Wallet balance: <span>$</span><%= sum %><span></span></p>
+          <div class="dashboard-wrapper user-dashboard">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Order ID</th>
+                    <th>Date</th>
+                    <th>Items Name</th>
+                    <th>Items Quantity</th>
+                    <th>Payment-Method</th>
+                    <th>Refunded Amount</th>
+                   
+                  </tr>
+                </thead>
+  
+                <tbody>
+  
+                <% RefundedOrder.forEach((wallet,index) => { %>
+                    <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= wallet._id %></td>
+                        <td>  <% if (walletbalance && walletbalance.date) { %>
+                          <%= walletbalance.date.toLocaleDateString() %>
+                        <% } else { %>
+                          N/A
+                        <% } %></td>
+                        <td><%= wallet.items[0].product.name %></td>
+                        <td><%= wallet.items[0].quantity %></td>
+                        <td><%= wallet. payment_method %></td>
+                        <td><span>$</span><%= wallet.total %></td>
+                       
+                      
+      
+                      
+                      
+                    
+                       
+                      </tr>
+                <% }) %>
+                 
+        
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include ('../partials/user-footer')%>

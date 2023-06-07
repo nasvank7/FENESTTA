@@ -1,4 +1,5 @@
 <%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
 
 <section class="signin-page account">
     <div class="container">
@@ -35,7 +36,7 @@
                 </div>
                 <% } %>
               <div class="text-center">
-                <button type="submit" class="btn btn-main text-center">Sign In</button>
+                <button type="submit" class="btn btn-main text-center">Sign Up</button>
               </div>
             </form>
             <p class="mt-20">Already hava an account ?<a href="/login"> Login</a></p>
@@ -61,7 +62,13 @@ setTimeout(()=>{
 
     // Validation for name field
     if (name == "") {
-        alert("Name must be filled out");
+      Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'Name must be filled out',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
         return false;
     }
 
@@ -69,44 +76,64 @@ setTimeout(()=>{
 
     // Validation for email field
     if (email == "") {
-        alert("Email must be filled out");
+      Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'Email must be filled out',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
         return false;
     } else {
         // regex for email validation
         var email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
         if (!email_regex.test(email)) {
-            alert("Invalid email address");
+          Swal.fire({
+           icon: 'error',
+            title: 'Oops...',
+             text: 'Invalid Email Address',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
             return false;
         }
     }
-   //validation for username
-    //  if (username == "") {
-    //     alert("Username must be filled out");
-    //     return false;
-    // }
+ 
 
+    if (password.length < 8 || !/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/.test(password)) {
+    Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one number.',
+    footer: '<a href="">Why do I have this issue?</a>',
+    confirmButtonColor: '#000000'
+  });
+  return false;
+}
 
-    // Validation for password field
-    // if (password == "") {
-    //     alert("Password must be filled out");
-    //     return false;
-    // }
-
-    if (password.length < 8) {
-      alert("Password should be at least 8 characters long.");
-      return false;
-    }
       // Validation for password field
       if (confirmpassword !== password) {
-        alert("password is not matching confirm the password");
+        Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'Password is not matching plz confirm the password',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
         return false;
     }
     if (phone == "") {
-        alert("Phonenumber must be filled out");
+      Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'Phone number must be filled out',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
         return false;
     }
-    return true; // form is valid
+    return true; 
 }
 
   </script>

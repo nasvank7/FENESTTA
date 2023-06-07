@@ -1,9 +1,9 @@
 <%-include('../partials/admin-header')%>
 
 
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 
 
 <!-- Table Start -->
@@ -51,10 +51,10 @@
                     <a
                       href="/unblock_user/<%= user._id %>"
                       class="btn border-shadow update"
-                   
+                      onclick="confirmunBlockuser(event)"
                     > 
                       <span class="text-gradient"
-                        ><i class="fas fa-lock"></i
+                        ><i href="/unblock_user/<%= user._id %>" class="fas fa-lock"></i
                       ></span>
                       </a>
                     <% } else{ %>
@@ -62,9 +62,9 @@
                     <a
                       href="/block_user/<%= user._id %>"
                       class="btn border-shadow update"
-                    >
+                      onclick="confirmBlockuser(event)" >
                       <span class="text-gradient"
-                        ><i class="fas fa-unlock"></i
+                        ><i href="/block_user/<%= user._id %>" class="fas fa-unlock"></i
                       ></span>
                     </a>
   
@@ -87,13 +87,52 @@
     }, 1000);
     
   
-    // $(document).ready(function() {
-    //   $('#myTable').DataTable();
-    // })
-    // let table= new DataTable('#myTable')
+    $(document).ready(function() {
+      $('#myTable').DataTable();
+    })
+    let table= new DataTable('#myTable')
    
   </script>
+  <script>
+       function confirmBlockuser(event) {
+  event.preventDefault(); 
 
+  swal({
+    title: "Do you really want to block the user?",
+    icon: "warning",
+    buttons: {
+      cancel: "Cancel",
+      confirm: "OK"
+    },
+  }).then(function (confirmed) {
+    console.log(event);
+    if (confirmed) {
+     
+      window.location.href = event.target.getAttribute("href"); 
+    }
+  });
+}
+
+function confirmunBlockuser(event) {
+  event.preventDefault(); 
+
+  swal({
+    title: "Do you really want to unblock the user?",
+    icon: "warning",
+    buttons: {
+      cancel: "Cancel",
+      confirm: "OK"
+    },
+  }).then(function (confirmed) {
+    console.log(event);
+    if (confirmed) {
+     
+      window.location.href = event.target.getAttribute("href"); 
+    }
+  });
+}
+
+  </script>
   
   
 <%-include('../partials/admin-footer')%>

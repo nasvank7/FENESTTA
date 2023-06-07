@@ -1,6 +1,7 @@
 
 
 <%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
 
 <section class="signin-page account ">
     <div class="container">
@@ -10,6 +11,11 @@
             <a class="logo" href="index.html">
               <img src="images/logo.png" alt="">
             </a>
+            <% if(locals.message){%>
+              <div id="msg" class="alert alert-success text-center">
+                 <%= message %>
+              </div>
+              <% } %>
             <h2 class="text-center pt-5">LOGIN WITH OTP</h2>
             <form class="text-left clearfix" action="/sendotp" method="post" >
               <div class="form-group">
@@ -21,17 +27,15 @@
                 placeholder="Phone">
 
               </div>
+            
               <!-- <div class=" button-otp col-md-12 form-group"> -->
-                <button type="submit" value="submit" class="btn btn-primary" >
+                <button type="submit" value="submit" class="btn btn-primary" onclick="startTimer()" >
                   Send OTP
                 </button>
               <!-- </div> -->
             </form  >
-            <% if(locals.message){%>
-              <div id="msg" class="alert alert-success text-center">
-                 <%= message %>
-              </div>
-              <% } %>
+            <div id="countdown"></div>
+         
             <form
             class="row contact_form"
             action="/verifyotp"
@@ -61,8 +65,24 @@
   </section>
   <script>
      setTimeout(()=>{
-      document.getElementById('message').style.display='none'
+      document.getElementById('msg').style.display='none'
     },2000)
   </script>
+  <script>
+    function startTimer(){
+    var timeleft = 59;
+  var downloadTimer = setInterval(function(){
+    if(timeleft <= 0){
+      clearInterval(downloadTimer);
+      document.getElementById("countdown").innerHTML = "Time is Over";
+      window.location.href = '//login-otp'; 
+    } else {
+      document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+    }
+    timeleft -= 1;
+  }, 1000);
+}
+ 
+  </script>
  
 <%-include('../partials/user-footer')%>

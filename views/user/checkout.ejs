@@ -1,86 +1,181 @@
 
 <%-include('../partials/user-header')%>
 <%-include('../partials/user-nav')%>
-
+<section class="page-header">
+   <div class="container">
+       <div class="row">
+           <div class="col-md-12">
+               <div class="content">
+                   <h1 class="page-name">Checkout</h1>
+                   <ol class="breadcrumb">
+                       <li><a href="index.html">Home</a></li>
+                       <li class="active">cart</li>
+                   </ol>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
 <div class="page-wrapper">
     <div class="checkout shopping">
        <div class="container">
           <div class="row">
              <div class="col-md-8">
-                <div class="block billing-details">
-                   <h4 class="widget-title">Add Address</h4>
-                   <form class="checkout-form">
+               <div class="block billing-details">
+                  <h4 class="widget-title">Delivery Address</h4>
+                  <form class="checkout-form" action="/order/<%= address._id %>" method="post">
+                    <div class="form-group">
+                      <label for="full_name">Full Name:</label>
+                      <input
+                      name="name"
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        placeholder="<%= address.name %>"
+                        disabled
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="user_address">Address :</label>
+                      <input
+                      name="address"
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        placeholder="<%= address.Address %>"
+                        disabled
+                      />
+                    </div>
+                    <div class="checkout-country-code clearfix">
                       <div class="form-group">
-                         <label for="full_name">Full Name</label>
-                         <input type="text" class="form-control" id="name" placeholder="">
+                        <label for="user_post_code">Phone number:</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="user_post_code"
+                          name="phone"
+                          value=""
+                          placeholder="<%= address.phone %>"
+                          disabled
+                        />
                       </div>
-                      <div class="form-group">
-                         <label for="user_address">Address</label>
-                         <input type="text" class="form-control" id="address" placeholder="">
-                      </div>
-                      <div class="checkout-country-code clearfix">
-                         <div class="form-group">
-                            <label for="user_post_code">Phone number</label>
-                            <input type="text" class="form-control" id="user_post_code" name="phone" value="">
-                         </div>
-                         <div class="form-group" >
-                            <label for="user_city">Pin code</label>
-                            <input type="text" class="form-control" id="user_city" name="pincode" value="">
-                         </div>
-                      </div>
-                      <div class="form-group">
-                         <label for="user_country">State</label>
-                         <input type="text" class="form-control" id="user_country" placeholder="">
-                      </div>
-                   </form>
-                </div>
-                <div class="block">
-                   <h4 class="widget-title">Payment Method</h4>
-                   <p>Credit Cart Details (Secure payment)</p>
-                   <div class="checkout-product-details">
-                      <div class="payment">
-                         <div class="card-details">
-                            <form  class="checkout-form">
-                               <div class="form-group">
-                                  <label for="card-number">Card Number <span class="required">*</span></label>
-                                  <input  id="card-number" class="form-control"   type="tel" placeholder="•••• •••• •••• ••••">
-                               </div>
-                               <div class="form-group half-width padding-right">
-                                  <label for="card-expiry">Expiry (MM/YY) <span class="required">*</span></label>
-                                  <input id="card-expiry" class="form-control" type="tel" placeholder="MM / YY">
-                               </div>
-                               <div class="form-group half-width padding-left">
-                                  <label for="card-cvc">Card Code <span class="required">*</span></label>
-                                  <input id="card-cvc" class="form-control"  type="tel" maxlength="4" placeholder="CVC" >
-                               </div>
-                               <a href="confirmation.html" class="btn btn-main mt-20">Place Order</a >
-                            </form>
-                         </div>
-                      </div>
+                    
+                    </div>
+                    <div class="form-group">
+                     <label for="user_country">City :</label>
+                     <input
+                     name="city"
+                       type="text"
+                       class="form-control"
+                       id="user_country"
+                       placeholder="<%= address.city %>"
+                       disabled
+                     />
                    </div>
+                    <div class="form-group">
+                      <label for="user_country">State: </label>
+                      <input
+                      name="state"
+                        type="text"
+                        class="form-control"
+                        id="user_country"
+                        placeholder="<%= address.state %>"
+                        disabled
+                      />
+                    </div>
+                
+               
                 </div>
+               
+                <div class="block">
+                  <h2 class="" style="width: 285px; border-bottom: 2px solid black;">PAYMENT METHODS</h2>
+                  <div class="form-check">
+                     <input class="form-check-input" type="radio" name="payment_method" id="exampleRadios1" value="cardpayment" checked>
+                     <label class="form-check-label" for="exampleRadios1">
+                      CARD PAYMENTS
+                     </label>
+                   </div>
+                   <div class="form-check">
+                     <input class="form-check-input" type="radio" name="payment_method" id="exampleRadios2" value="razorpay">
+                     <label class="form-check-label" for="exampleRadios2">
+                       RAZORPAY
+                     </label>
+                   </div>
+                   <div class="form-check">
+                     <input class="form-check-input" type="radio" name="payment_method" id="exampleRadios2" value="paypal">
+                     <label class="form-check-label" for="exampleRadios2">
+                       PAYPAL
+                     </label>
+                   </div>
+                   <div class="form-check ">
+                     <input class="form-check-input" type="radio" name="payment_method" id="exampleRadios3" value="cashondelivery" >
+                     <label class="form-check-label" for="exampleRadios3">
+                 CASH ON DELIVERY
+                     </label>
+
+                   </div>
+                 
+           
+               <button type="submit" class="btn btn-main mt-20">Place Order</button>
+                </div>
+                   </form>
+          
              </div>
              <div class="col-md-4">
                 <div class="product-checkout-details">
                    <div class="block">
                       <h4 class="widget-title">Order Summary</h4>
-                      <div class="media product-card">
+                     
+                      <% if (cart && cart.products) { %>
+                      <% cart.products.forEach(function(product) { %>
+                      <div class="media product-card " >
+                        
                          <a class="pull-left" href="product-single.html">
-                            <img class="media-object" src="images/shop/cart/cart-1.jpg" alt="Image" />
+                            <img class="media-object" src="/<%= product.productId.photo[0] %>" alt="image" />
                          </a>
                          <div class="media-body">
-                            <h4 class="media-heading"><a href="product-single.html">Ambassador Heritage 1921</a></h4>
-                            <p class="price">1 x $249</p>
+                            <h4 class="media-heading" style="font-weight: bold;"><%= product.productId.name %><a href="product-single.html"></a></h4>
+                            <p class="price">$ <%= product.productId.price %></p>
+                            <span>x<%= product.quantity %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <td class="total price">
+                              <% var total = product.quantity * product.productId.price; %>
+                               <h5 id="product-total-price-<%= product.productId._id %>" class="item-total" hidden><%= total %></h5>
+                           </td>
                             <span class="remove" >Remove</span>
                          </div>
+                       
                       </div>
+                      <% }); %>
+                      <% } else { %>
+                        <p>No products in the cart.</p>
+                      <% } %>
                       <div class="discount-code">
                          <p>Have a discount ? <a data-toggle="modal" data-target="#coupon-modal" href="#!">enter it here</a></p>
                       </div>
+                      <div class="card">
+                        <div class="card-body d-flex">
+                           <form id="couponForm" action="/redeem_coupon" method="post" class="flex-grow-1">
+                              <div class="form-group d-flex">
+                                 <label for="couponCode" class="mr-2">Coupon Code</label>  <span style="padding-left: 80px;"><a href=""  data-toggle="modal" data-target="#exampleModal">Available coupons</a> </span>
+                                 <input type="text" class="form-control" name="coupon" id="couponCode" placeholder="Enter the coupon code">
+
+                              </div>
+                              <div id="couponMessage" style="padding-bottom: 10px; color: darkred;"></div>
+
+                              <div id="couponMessage1" style="padding-bottom: 10px; color: rgb(7, 126, 13);"></div>
+
+                              <button type="button" onclick="redeem()" class="btn btn-primary ml-auto" style="margin-bottom: 30px;">Redeem</button>
+                           </form>
+                        </div>
+                     </div>
+                     <label>
+                        <input type="checkbox" id="walletCheckbox"> Use wallet balance
+                      </label>
                       <ul class="summary-prices">
                          <li>
-                            <span>Subtotal:</span>
-                            <span class="price">$190</span>
+                            <span >Subtotal:
+                            </span>
+                            <span class="price" id="subtotal"></span><span>$</span>
                          </li>
                          <li>
                             <span>Shipping:</span>
@@ -88,12 +183,11 @@
                          </li>
                       </ul>
                       <div class="summary-total">
-                         <span>Total</span>
-                         <span>$250</span>
+                         <span>Total</span> 
+                         <span id="totalprice"></span><span>$</span>
                       </div>
-                      <div class="verified-icon">
-                         <img src="images/shop/verified.png">
-                      </div>
+                  
+               
                    </div>
                 </div>
              </div>
@@ -101,5 +195,133 @@
        </div>
     </div>
  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="coupon-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-body">
+             <form>
+                <div class="form-group">
+                   <input class="form-control" type="text" placeholder="Enter Coupon Code">
+                </div>
+                <button type="submit" class="btn btn-main">Apply Coupon</button>
+             </form>
+          </div>
+       </div>
+    </div>
+ </div>
+<!-- Button trigger modal -->
 
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align: center;">
+        <h2 class="modal-title" id="exampleModalLabel" style="font-weight: bold; color: black;">Available Coupon</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+          <% coupon.forEach(element => { %>
+            <% if (!(new Date(element.date) < new Date()) || element.status !== true) { %>
+              <p style="color: black; font-family: 'Times New Roman', Times, serif; font-weight: bolder;"><%= element.code %></p>
+            <% } %>
+          <% }) %>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-main" data-dismiss="modal"  style="color:beige">Close</button>
+     
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+   	const setSubtotal=()=>{
+		const itemTotal=document.getElementsByClassName('item-total')
+		let subtotal=0;
+		for (let i = 0; i < itemTotal.length; i++) {
+
+			subtotal+=Number(itemTotal[i].innerHTML)
+		}
+		document.getElementById('subtotal').innerHTML=subtotal;
+		document.getElementById('totalprice').innerHTML=subtotal;
+
+     
+
+	}
+	setSubtotal();
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+  
+  
+  
+  function redeem() {
+        var formData = $('#couponForm').serialize();
+  
+        $.ajax({
+           url: "/redeem_coupon",
+           type: "POST",
+           data: formData,
+           success: function(response) {
+            
+              // Handle the response here
+              
+              handleCouponResponse(response);
+           },
+           error: function(xhr, status, error) {
+              console.error('Coupon request failed. Status:', status);
+           }
+        });
+     }
+     
+     function handleCouponResponse(response) {
+    var couponMessage = document.getElementById('couponMessage');
+    var couponCodeInput = document.getElementById('couponCode');
+    var totalElement = document.getElementById('totalprice');
+  
+    if (couponCodeInput.value.trim() === '') {
+      // Clear the message if the coupon code input is empty
+      couponMessage.textContent = '';
+      return;
+    }
+  
+    if (response.success) {
+      // Coupon is available, update the message and subtract the coupon value from the total
+      var couponValue = response.amount;
+      var total = parseFloat(totalElement.textContent);
+      var updatedTotal = total - couponValue;
+      totalElement.textContent = updatedTotal.toFixed(2); // Update the total with 2 decimal places
+      couponMessage1.textContent = response.message; // Display the success message from the response
+    } else {
+      // Coupon is not available or there was an error
+      couponMessage.textContent = response.message; // Display the error message from the response
+    }
+  }
+  
+  
+  
+  </script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> 
+<script>
+   const walletCheckbox = document.getElementById('walletCheckbox');
+
+    walletCheckbox.addEventListener('change', function() {
+  if (walletCheckbox.checked) {
+    
+    console.log('Checkbox is selected');
+  
+  } else {
+  
+    console.log('Checkbox is not selected');
+  
+  }
+});
+
+</script>
  <%-include('../partials/user-footer')%>

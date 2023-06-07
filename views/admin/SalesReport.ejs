@@ -1,0 +1,128 @@
+<%-include('../partials/admin-header')%>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+<!-- Include DataTables Buttons CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+
+<!-- Include DataTables Buttons JavaScript -->
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+<!-- Add Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+
+<!-- Add Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<!-- Table Start -->
+<div class="container-fluid pt-4 px-4">
+  <div class="row g-4">
+    <div class="col-sm-3 col-xl-2 w-100">
+      <form action="/adminSalesReportFilter" method="post">
+        <div class="col-md-4 col-sm-12 text-right mb-2 mt-5">
+          <h5>Filter Orders</h5>
+        </div>
+        <div class="d-flex">
+          <div>
+            <label>FROM : </label>
+            <input type="date" value="newDate.[0]" name="fromdate" id="date">
+            <label class="ml-4">TO : </label>
+            <input type="date" value="newDate.[1]" name="todate" id="date">
+            <span class="pl-4 m-0">
+              <input type="submit" value="submit" class="btn-sm btn text-light" style="background-color: rgb(131, 26, 26);">
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-12">
+      <% if(locals.msg) { %>
+      <div id="msg" class="alert alert-success"><%- locals.msg -%></div>
+      <%}%>
+      <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Order Details</h6>
+        <div class="table-responsive">
+          <table id="myTable" class="table">
+            <thead>
+              <tr>
+                <th scope="col">Order Id</th>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Item</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Payment-Method</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% filteredOrders.forEach((order) => { %>
+              <tr>
+                <td style="background-color: #191C24;"><%= order._id %></td>
+                <td style="background-color: #191C24;"><%= order.createdAt.toLocaleDateString() %></td>
+                <td style="background-color: #191C24;"><%= order.user.name %></td>
+      
+                <td style="background-color: #191C24;"><%= order.items[0].product.name %></td>
+                <td style="background-color: #191C24;"><%= order.user.phone %></td>
+                <td style="background-color: #191C24;">$<%= order.total %></td>
+                <td style="background-color: #191C24;"><%= order.status %></td>
+                <td style="background-color: #191C24;"><%= order.payment_method %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Table End -->
+
+<script>
+  setTimeout(() => {
+    document.getElementById("msg").style.display = "none";
+  }, 1000);
+
+  $(document).ready(function () {
+    $('#myTable').DataTable({
+      dom: 'Bfrtip', // Add export buttons to table wrapper
+      buttons: [
+        'copy', 'csv',
+        {
+          extend: 'excelHtml5',
+          text: 'Export to Excel',
+          filename: 'table-data',
+          exportOptions: {
+            columns: ':visible'
+          },
+          title: null,
+          messageTop: null,
+          messageBottom: null,
+          className: 'btn btn-primary'
+        },
+        {
+          extend: 'pdfHtml5',
+          text: 'Export to PDF',
+          filename: 'table-data',
+          exportOptions: {
+            columns: ':visible'
+          },
+          title: null,
+          messageTop: null,
+          messageBottom: null,
+          className: 'btn btn-primary'
+        },
+        'print' // Add desired export buttons
+      ]
+    });
+  });
+</script>
+
+   
+  
+  
+<%-include('../partials/admin-footer')%>

@@ -72,7 +72,7 @@
 							</div>
 							<ul class="text-center cart-buttons">
 								<li><a href="/cart" class="btn btn-small">View Cart</a></li>
-								<li><a href="checkout.html" class="btn btn-small btn-solid-border">Checkout</a></li>
+								<li><a href="/address"class="btn btn-small btn-solid-border">Checkout</a></li>
 							</ul>
 						</div>
 
@@ -84,18 +84,21 @@
 								class="tf-ion-ios-search-strong"></i> Search </a>
 						<ul class="dropdown-menu search-dropdown">
 							<li>
-								<form action="post"><input type="search" class="form-control" placeholder="Search..."></form>
+								<form action="/searchProducts" method="post"><input type="search" class="form-control" name="query" placeholder="Search..."></form>
 							</li>
 						</ul>
 					</li><!-- / Search -->
 				<% } %>
+				<ol>
                   <li>
 						
 						<div class="user-access pl-3">
 							<% if(user) {%>
-								<a href="#"> <%= user.name%> &nbsp; /</a>
+								<a href="/userProfile"> <%= user.name%> &nbsp; /</a>
 								
 								<a href="/logout">&nbsp; Logout</a>
+
+
 
 								
 							<% } else{%>
@@ -108,7 +111,9 @@
 						
 							<!-- <a href="/logout">&nbsp; Logout</a> -->
 			            </div>
-			    </li>     
+			
+			    </li>   
+			</ol>  
 					<!-- Languages -->
 					<!-- <li class="commonSelect">
 						<select class="form-control">
@@ -120,6 +125,7 @@
 					<!-- </li> Languages  -->
 
 				</ul><!-- / .nav .navbar-nav .navbar-right -->
+			
 			</div>
 		</div>
 	</div>
@@ -149,8 +155,8 @@
 					<!-- Home -->
 					<li class="dropdown "><a href="/home">HOME</a></li><!-- / Home -->
 					<li class="dropdown "><a href="/shop">SHOP</a></li><!-- / Home -->
-					<li class="dropdown "><a href="/shop">NEW ARRIVALS</a></li><!-- / Home -->
-					<li class="dropdown "><a href="/shop">ORDERS</a></li><!-- / Home -->
+					<li class="dropdown "><a href="/newarrival">NEW ARRIVALS</a></li><!-- / Home -->
+					<li class="dropdown "><a href="/orderDetails">ORDERS</a></li><!-- / Home -->
 					<!-- <li class="dropdown "><a href="index.html">WOMENS</a></li>
 					<li class="dropdown "><a href="index.html">KIDS</a></li> -->
 

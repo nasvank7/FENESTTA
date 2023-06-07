@@ -3,21 +3,67 @@
 
 <section class="products section bg-gray">
 	<div class="container">
+
 		<div class="row">
-			<div class="title text-center">
-				<h2>Trendy Products</h2>
+		<div style="display: flex;">
+			<div class="widget" style="width: 50%; margin-left: 50px;">
+				<h4 class="widget-title">Sort By</h4>
+				<button class="btn btn-secondary"><a href="/LTH?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">Low to High</a></button> &nbsp;&nbsp;
+				<button class="btn btn-secondary"><a href="/HTL?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">High to Low</a></button>
+			</div>
+		
+			<div class="widget product-category" style="width: 50%; margin-left: 500px;">
+				<h4 class="widget-title" >Filter By Categories</h4>
+				<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
+					  <div class="panel panel-default" style="width: 200px;">
+						<div class="panel-heading" role="tab" id="headingOne">
+							  <h4 class="panel-title">
+								<a role="button" data-toggle="collapse" data-parent="#accordion" href="/shirts" aria-expanded="true" >
+							SHIRTS
+								</a>
+							  </h4>
+						</div>
+				
+				  </div>
+				  <div class="panel panel-default" style="width: 200px;">
+					<div class="panel-heading" role="tab" id="headingTwo">
+					  <h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="/tshirts" aria-expanded="false" aria-controls="collapseTwo">
+						      T-SHIRTS
+						</a>
+					  </h4>
+					</div>
+				
+				  </div>
+				  <div class="panel panel-default" style="width: 200px;">
+					<div class="panel-heading" role="tab" id="headingOne">
+						  <h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="/hoodies" aria-expanded="true" aria-controls="collapseOne">
+						HOODIES
+							</a>
+						  </h4>
+					</div>
+			
+			  </div>
+				 
+				</div>
+				
 			</div>
 		</div>
-		
+			<div class="title text-center">
+				<h2>PRODUCTS</h2>
+			</div>
+		</div>
+
 		<div class="row">
-			<% product.forEach(function(product){%>
-				<% if(product.Blocked){ %>	
+			<% if (user) { %>
+			<% product.forEach(function(product) { %>
+			<% if(product.Blocked) { %>	
 			<div class="col-md-4">
 				<div class="product-item">
 					<div class="product-thumb">
-						
 						<span class="bage">Sale</span>
-						<img class="img-responsive" src="<%=product.photo %>" alt="product-img" />
+						<img class="img-responsive" src="<%=product.photo[0] %>" alt="product-img" />
 						<div class="preview-meta">
 							<ul>
 								<li>
@@ -26,13 +72,15 @@
 									</span>
 								</li>
 								<li>
-			                        <a href="#!" ><i class="tf-ion-ios-heart"></i></a>
+									<a href="#!" ><i class="tf-ion-ios-heart"></i></a>
 								</li>
 								<li>
-									<a href="/add-to-cart/<%= product._id %>"><i class="tf-ion-android-cart"></i></a>
+									<a href="#" class="add-to-cart-btn" data-product-id="<%= product._id %>">
+										<i class="tf-ion-android-cart"></i>
+									  </a>
 								</li>
 							</ul>
-                      	</div>
+						</div>
 					</div>
 					<div class="product-content">
 						<h4><a href="/single/<%=product._id %>"><%= product.name %></a></h4>
@@ -43,9 +91,72 @@
 			</div>
 			<% } %>
 			<% }) %>
+			<% } else {  %>
+			<% product.forEach(function(product) { %>
+			<% if(product.Blocked) { %>	
+			<div class="col-md-4">
+				<div class="product-item">
+					<div class="product-thumb">
+						<span class="bage">Sale</span>
+						<img class="img-responsive" src="<%=product.photo[0] %>" alt="product-img" />
+						<div class="preview-meta">
+							<ul>
+								<li>
+									<span  data-toggle="modal" data-target="#product-modal">
+										<i class="tf-ion-ios-search-strong"></i>
+									</span>
+								</li>
+								<li>
+									<a href="#!" ><i class="tf-ion-ios-heart"></i></a>
+								</li>
+								<li>
+									<a href="/login"><i class="tf-ion-android-cart"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="product-content">
+						<h4 class="product-name"><a href="/single/<%=product._id %>"  title="<%= product.name %>"><%= product.name %></a></h4>
+						<style>
+							.product-name{
+							 white-space: nowrap;
+                              overflow: hidden;
+                             text-overflow: ellipsis;
+							}
+						</style>
+						<p class="product-price">$ <%= product.price %></p>
+						<p class="category-s"><%= product.category_name %></p>
+					</div>
+				</div>
+			</div>
+			<% } %>
+			<% }) %>
+			<% } %>
 		</div>
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<ul class="pagination">
+					<li <% if (currentPage === 1) { %>class="disabled"<% } %>>
+						<a <% if (currentPage > 1) { %>href="/shop?page=<%= currentPage - 1 %>"<% } %>>&laquo;</a>
+					</li>
+
+					<% for (let i = 1; i <= totalPages; i++) { %>
+					<li <% if (currentPage === i) { %>class="active"<% } %>>
+						<a href="/shop?page=<%= i %>"><%= i %></a>
+					</li>
+					<% } %>
+
+					<li <% if (currentPage === totalPages) { %>class="disabled"<% } %>>
+						<a <% if (currentPage < totalPages) { %>href="/shop?page=<%= currentPage + 1 %>"<% } %>>&raquo;</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
 	</div>
 </section>
+
 <footer class="footer section text-center">
 	<div class="container">
 		<div class="row">
@@ -57,9 +168,9 @@
 						</a>
 					</li>
 					<li>
-						<a href="https://www.instagram.com/themefisher">
-							<i class="tf-ion-social-instagram"></i>
-						</a>
+							<a href="https://www.instagram.com/themefisher">
+									<i class="tf-ion-social-instagram"></i>
+								</a>
 					</li>
 					<li>
 						<a href="https://www.twitter.com/themefisher">
@@ -86,11 +197,34 @@
 						<a href="contact.html">PRIVACY POLICY</a>
 					</li>
 				</ul>
-				<!-- <p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p> -->
 			</div>
 		</div>
 	</div>
 </footer>
+<script>
+	
+	$(document).ready(function() {
+  
+  $('.add-to-cart-btn').click(function(e) {
+    e.preventDefault(); 
 
+    var productId = $(this).data('product-id');
 
+    $.ajax({
+      url: '/add-to-cart/' + productId,
+      method: 'GET',
+      dataType: 'json',
+      success: function(response) {
+      
+        toastr.success(response.message);
+      },
+      error: function(xhr, status, error) {
+       
+        toastr.error('Error occurred while adding to cart.');
+      }
+    });
+  });
+});
+
+</script>
 <%-include('../partials/user-footer')%>

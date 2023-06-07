@@ -1,5 +1,8 @@
 <%-include('../partials/admin-header')%>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 
 
 
@@ -22,7 +25,7 @@
       <div class="bg-secondary rounded h-100 p-4">
         <h6 class="mb-4">product Data</h6>
         <div class="table-responsive">
-          <table class="table">
+          <table class="table" id="myTable">
             <thead>
               <tr>
                 <th scope="col">Serial Number</th>
@@ -39,37 +42,38 @@
               <% product_data.forEach(function(product, index) { %>
 
                 <tr>
-                  <td><%= index + 1 %></td>
-                  <td><%= product.name %></td>
-                  <td><%= product.price %></td>
-                  <td><%= product.category_name %></td>
-                  <td><%= product.description %></td>
-                  <td><%= product.stock %></td>
-                  <td>
+                  <td style="background-color: #191C24;"><%= index + 1 %></td>
+                  <td class="product-name" style="background-color: #191C24;"><%= product.name %></td>
+                
+                  <td style="background-color: #191C24;"><%= product.price %></td>
+                  <td style="background-color: #191C24;"><%= product.category_name %></td>
+                  <td style="background-color: #191C24;"><%= product.description %></td>
+                  <td style="background-color: #191C24;"><%= product.stock %></td>
+                  <td style="background-color: #191C24;">
                     <img class="img-thumbnail" width="100px" src="<%= product.photo[0] %>">
                   </td>
-                  <td>
+                  <td style="background-color: #191C24;">
                     <a href="/update_product/<%= product._id %>" class="btn border-shadow update">
                       <span class="text-gradient"><i class="fas fa-pencil-alt"></i></span>
                     </a>
                         <% if(product.Blocked){ %>
                     <a
-                      href="/redo/<%= product._id %>"
-                      class="btn border-shadow update"
+                      href="/undo/<%= product._id %>"
+                      class="btn border-shadow update" onclick="confirmBlock(event,'<%= product._id %>')"
                     >
                       <span class="text-gradient"
-                        ><i class="fas fa-unlock"></i
+                        ><i class="fas fa-unlock "></i
                       ></span>
                     </a>
                     <% } else{ %>
   
                     <a
-                      href="/undo/<%= product._id %>"
-                      class="btn border-shadow update"
+                      href="/redo/<%= product._id %>"
+                      class="btn border-shadow update" onclick="confirmunBlock(event)"
                     >
                       <span class="text-gradient"
-                        ><i class="fas fa-lock"></i
-                      ></span>
+                        ><i href="/redo/<%= product._id %>" class="fas fa-lock"></i
+                      ></span> 
                     </a>
   
                     <% } %>
@@ -85,5 +89,54 @@
   </div>
 </div>
 <!-- Table End -->
+<script>
+    
+    $(document).ready(function() {
+      $('#myTable').DataTable();
+    })
+    let table= new DataTable('#myTable')
 
+</script>
+<script>
+    function confirmBlock(event,id) {
+     event.preventDefault()
+  
+     swal({
+       title: "Do you really want to block the product?",
+       icon: "warning",
+       buttons: {
+         cancel: "Cancel",
+         confirm: "OK"
+        },
+      }).then(function (confirmed) {
+       
+        console.log(event.target.getAttribute("href"),'kkjhjhk');
+        if (confirmed) {
+    
+      window.location.href = "/undo/"+id; 
+    }
+  });
+}
+    function confirmunBlock(event) {
+  event.preventDefault(); 
+
+  swal({
+    title: "Do you really want to unblock the product?",
+    icon: "warning",
+    buttons: {
+      cancel: "Cancel",
+      confirm: "OK"
+    },
+  }).then(function (confirmed) {
+    console.log(event);
+    if (confirmed) {
+     
+      window.location.href = event.target.getAttribute("href"); 
+    }
+  });
+}
+
+
+   
+</script>
 <%-include('../partials/admin-footer')%>

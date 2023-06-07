@@ -1,0 +1,69 @@
+<%-include('../partials/user-header')%> 
+
+    <section class="signin-page account">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="block text-center">
+                        <a class="logo" href="index.html">
+                            <img src="images/logo.png" alt="">
+                        </a>
+                       
+                        <!-- <form class="text-left clearfix" action="/sendOtp" method="post">
+                            <div class="form-group">
+                                <input type="tel" name="phone" class="form-control" placeholder="Phone number">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" , class="btn btn-main text-center">Send OTP</button>
+                            </div>
+
+                        </form>
+                        <% if(locals.msg) { %>
+                            <div id="msg" class="alert alert-success" style="color: black;">
+                                <%- locals.msg%>
+                            </div>
+                            <% } %>
+                            -->
+                           
+                               <h2 class="text-center">Verify your Phone</h2>
+                                <form class="text-left clearfix" action="/fverifyOtp" method="post"
+                                    novalidate="novalidate">
+                                    <div class="form-group">
+                                        <input type="tel" id="otp" name="otp" class="form-control"
+                                            placeholder="Enter OTP">
+                                    </div>
+                                     
+                                    <div id="countdown"></div>
+
+                                    <div class="text-center">
+                                        <button type="submit" value="submit"
+                                            class="btn btn-main text-center">Verify</button>
+                                    </div>
+                                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%- include ('../partials/user-Footer')%>
+        <script>
+            setTimeout(() => {
+                document.getElementById('msg').style.display = 'none'
+            }, 2000)
+        </script>
+        <script>
+            var timeleft = 59;
+          var downloadTimer = setInterval(function(){
+            if(timeleft <= 0){
+              clearInterval(downloadTimer);
+              document.getElementById("countdown").innerHTML = "Time is Over";
+              window.location.href = '/forgotPassword'; 
+            } else {
+              document.getElementById("countdown").innerHTML = timeleft + " seconds remaining";
+            }
+            timeleft -= 1;
+          }, 1000);
+         
+        </script>
+
+<%-include('../partials/user-header')%> 

@@ -1,0 +1,90 @@
+<%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Orders</h1>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li class="active">my account</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="user-dashboard page-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="list-inline dashboard-menu text-center">
+          <li><a href="/wallet">Wallet</a></li>
+					<li><a class="active" href="/userOrder">Orders</a></li>
+					<li><a href="/userAddress">Address</a></li>
+					<li><a href="/userProfile">Profile Details</a></li>
+				</ul>
+                <div class="dashboard-wrapper user-dashboard">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>No</th>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Items Name</th>
+                            <th>Items Quantity</th>
+                            <th>Total Price</th>
+                            <th>Items Photo</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+          
+                        <tbody>
+          
+                          <% orderData.forEach(function(order,index) { %>
+                          <tr>
+                            <td><%= index+1 %></td>
+                            <td><%= order._id %></td>
+                            <td><%= order.createdAt.toLocaleDateString() %></td>
+          
+                            <td>
+                              <% order.items.forEach((item, index) => { %> <%= index+1 %>.
+                              <%= item.product.name %> <br />
+                              <% }) %>
+                            </td>
+                            <td>
+                              <% order.items.forEach((item) => { %> <%= item.quantity %>
+                              <br />
+                              <% }) %>
+                            </td>
+                            <td>$<%= order.total %></td>
+                            <td>
+                              <% order.items.forEach((item,index) =>{ %>
+          
+                              <img
+                                src="<%= item.product.photo[0] %>"
+                                alt=""
+                                width="40px"
+                                class="img-thumbnail"
+                              />
+                              <br />
+                              <% }) %>
+                            </td>
+          
+                            <td><%= order.status %></td>
+          
+                            <td><a href="/orderView/<%= order._id %>" class="btn btn-default">View</a></td>
+          
+                          </tr>
+                          <% }) %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+			</div>
+		</div>
+	</div>
+</section>

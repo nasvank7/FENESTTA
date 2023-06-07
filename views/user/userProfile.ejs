@@ -1,0 +1,102 @@
+<%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
+ 
+
+
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">User Profile</h1>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li class="active">my account</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+          <li><a href="/wallet">Wallet</a></li>
+          <li><a href="/userOrder">Orders</a></li>
+          <li><a href="/userAddress">Address</a></li>
+          <li><a class="active"  href="/userProfile">Profile Details</a></li>
+        </ul>
+        <div class="dashboard-wrapper dashboard-user-profile">
+          <div class="media">
+            <div class="pull-left text-center" href="#!">
+              <img class="media-object user-img" src="images/avater.jpg" alt="Image">
+              <a href="#x" class="btn btn-transparent mt-20">Change Image</a>
+            </div>
+            <div class="media-body">
+              <ul class="user-profile-list">
+				
+                <li><span>Full Name:</span><span style="color: black; font-weight: bolder;"><%= user.name %></span></li>
+               
+                <li><span>Email:</span><span style="color: black; font-weight: bolder;"><%= user.email %></span></li>
+                <li><span>Phone:</span><span style="color: black; font-weight: bolder;"><%= user.phone %></span></li>
+               <li><button type="" class="btn btn-main"><a href="/updateProfile/ <%= user._id  %> " style="color: beige;">Update Profile</a> </button></li>
+              </ul>
+            </div>
+			
+                
+              
+          </div>
+		 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer section text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="social-media">
+					<li>
+						<a href="https://www.facebook.com/themefisher">
+							<i class="tf-ion-social-facebook"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/themefisher">
+							<i class="tf-ion-social-instagram"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.twitter.com/themefisher">
+							<i class="tf-ion-social-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.pinterest.com/themefisher/">
+							<i class="tf-ion-social-pinterest"></i>
+						</a>
+					</li>
+				</ul>
+				<ul class="footer-menu text-uppercase">
+					<li>
+						<a href="contact.html">CONTACT</a>
+					</li>
+					<li>
+						<a href="shop.html">SHOP</a>
+					</li>
+					<li>
+						<a href="pricing.html">Pricing</a>
+					</li>
+					<li>
+						<a href="contact.html">PRIVACY POLICY</a>
+					</li>
+				</ul>
+				<p class="copyright-text">Copyright &copy;2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a></p>
+			</div>
+		</div>
+	</div>
+</footer>
+    <!-- 

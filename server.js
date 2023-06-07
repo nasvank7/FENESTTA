@@ -1,14 +1,20 @@
 require("dotenv").config();
-
 const express = require("express");
 const path = require("path");
 const bodyparser = require("body-parser");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const nocache = require("nocache");
+const paypal = require("paypal-rest-sdk")
 const userRouter = require("./server/routes/user");
 const adminRouter = require("./server/routes/admin");
+const paypalClientId = process.env.PaypalClientId;
+const paypalSecret = process.env.paypalSecret;
+
+
+
 const logger=require('morgan');
+
 
 const app = express();
 const db = require("./server/connection/connection");
@@ -31,6 +37,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 
 app.use(bodyparser.urlencoded({ extended: false }));
 

@@ -1,5 +1,20 @@
 <%-include('../partials/user-header')%> <%-include('../partials/user-nav')%>
 
+<section class="page-header">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="content">
+                  <h1 class="page-name">Add Address</h1>
+                  <ol class="breadcrumb">
+                      <li><a href="/cart">cart</a></li>
+                      <li class="active">checkout</li>
+                  </ol>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
 <div class="page-wrapper">
   <div class="checkout shopping">
     <div class="container">
@@ -7,7 +22,7 @@
         <div class="col-md-8">
           <div class="block billing-details">
             <h4 class="widget-title">Add Address</h4>
-            <form class="checkout-form" action="/checkout" method="post">
+            <form class="checkout-form" action="/address" method="post" name="basic" onsubmit="return validateBasic()">
               <div class="form-group">
                 <label for="full_name">Full Name</label>
                 <input
@@ -21,10 +36,10 @@
               <div class="form-group">
                 <label for="user_address">Address</label>
                 <input
-                name="address"
+                name="Address"
                   type="text"
                   class="form-control"
-                  id="address"
+                  id="Address"
                   placeholder=""
                 />
               </div>
@@ -80,22 +95,31 @@
           <div class="col-md-4">
             <div class="product-checkout-details">
                <div class="block">
-                  <h4 class="widget-title">Existing Address</h4>
-                  <form class="contact_form">
+                  <h4 class="widget-title">Recent Address</h4>
+                 
                     <% addressofdelivery.forEach(function(address,index) { %>
                       
                       <div class="col-md-12 form-group">
-                      <h5 style="text-decoration: underline;"> Address: <%= index+1 %></h5>
-                      <p><%= address.name %></p>
-                      <p><%= address.address %></p>
-                      <p><%= address.phone %></p>
-                      <p><%= address.pincode %></p>
-                      <p><%= address.city %></p>
-                      <p><%= address.state %></p>
-                      <a href="/checkout/<%= address._id %>" class="primary-btn" >Deliver here</a>       
+                        <label for="">
+                           
+                        <input type="radio" name="selectedaddress" value="<%= index+1 %>"</>
+                      <h5 style="text-decoration: underline; font-size:18px; font-weight: bold;"> Address: <%= index+1 %></h5>
+
+                      <p><%= address.name %>,
+                      <p><%= address.Address %>,
+
+                     
+                    
+                      <%= address.phone %>,
+                      <%= address.pincode %>,
+                      <%= address.city %>,
+                      <%= address.state %>
+                      <a href="/checkout/<%= address._id %>" class="primary-btn "  >Deliver here</a>    
+                    </label>   
                     </div>
-                  </form>
-                  <% }); %>
+                    <% }); %>
+             
+                
                  
                 
                 
@@ -107,5 +131,48 @@
     </div>
   </div>
 </div>
+<script>
+setTimeout(()=>{
+      document.getElementById('msg').style.display='none'
+    },2000)
+    function validateBasic() {
+     console.log('d ncds n fsnk  mszc ');
+    var name = document.forms["basic"]["name"].value.trim();
+    var address = document.forms["basic"]["address"].value.trim();
+    var phone = document.forms["basic"]["phone"].value.trim();
+    var pincode = document.forms["basic"]["pincode"].value.trim();
+    var city = document.forms["basic"]["city"].value.trim();
+    var state = document.forms["basic"]["state"].value.trim();
+  
 
+    // Validation for name field
+    if (name == "") {
+        alert("Name must be filled out");
+        return false;
+    }
+    if (address == "") {
+        alert("address must be filled out");
+        return false;
+    }
+    if (phone == "") {
+        alert("Phonenumber must be filled out");
+        return false;
+    }
+    if (pincode == "") {
+        alert("pincode must be filled out");
+        return false;
+    }
+    if (city == "") {
+        alert("city must be filled out");
+        return false;
+    }
+    if (state == "") {
+        alert("state must be filled out");
+        return false;
+    }
+    
+    return true; // form is valid
+}
+
+</script>
 <%-include('../partials/user-footer')%>

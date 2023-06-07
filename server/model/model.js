@@ -32,6 +32,15 @@ var usersSchema=new mongoose.Schema({
        
        
     },
+    address:[{
+       name:String,
+       Address:String,
+       state:String,
+       city:String,
+       pincode:String,
+       phone:Number,
+    }],
+    coupon:[String],
 
     isBlocked:{
         default:false,

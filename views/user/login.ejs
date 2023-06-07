@@ -1,4 +1,5 @@
 <%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
 
 <section class="signin-page account">
     <div class="container">
@@ -26,6 +27,7 @@
                      <%= msg %>
                   </div>
                   <% } %>
+                
               <div class="text-center">
                 <button type="submit" class="btn btn-main text-center" >Login</button>
                 
@@ -36,6 +38,7 @@
             </div>
             <a href="/login-otp"><button  class="btn btn-main text-center" >LOGIN WITH OTP</button></a>
             <p class="mt-20">New in this site ?<a href="signup"> Create New Account</a></p>
+            <p><a href="/forgotPassword"> Forgot your password?</a></p>
           </div>
         </div>
       </div>
@@ -65,14 +68,26 @@
 
  // Validation for email field
  if (email == "") {
-     alert("Email must be filled out");
+  Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'Email must be filled out',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
      return false;
  } else {
      // regex for email validation
      var email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
      if (!email_regex.test(email)) {
-         alert("Invalid email address");
+      Swal.fire({
+           icon: 'error',
+            title: 'Oops...',
+             text: 'Invalid Email Address',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
          return false;
      }
  }
@@ -81,7 +96,13 @@
 
  // Validation for password field
  if (password == "") {
-     alert("Password must be filled out");
+  Swal.fire({
+       icon: 'error',
+       title: 'Oops...',
+       text: 'password must be 8 characters',
+       footer: '<a href="">Why do I have this issue?</a>',
+       confirmButtonColor: '#000000',
+})
      return false;
  }
  

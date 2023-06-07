@@ -1,0 +1,68 @@
+<%-include('../partials/user-header')%>
+<%-include('../partials/user-nav')%>
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Address </h1>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li class="active">my account</li>
+					</ol>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+          <li><a href="/wallet">Wallet</a></li>
+          <li><a href="/userOrder">Orders</a></li>
+          <li><a class="active" href="/userAddress">Address</a></li>
+          <li><a href="/userProfile">Profile Details</a></li>
+        </ul>
+        <div class="dashboard-wrapper user-dashboard">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Sl no:</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>State</th>
+                  <th>city</th>
+                  <th class="col-md-2 col-sm-3">Phone</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% addresses.forEach((address,index) => { %>
+                    <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= address.name %></td>
+                        <td><%= address.Address %></td>
+                        <td><%= address.state %></td>
+                        <td><%= address.city %></td>
+                        <td><%= address.phone %></td>
+                        <td>
+                          <div class="btn-group" role="group">
+                            <a href="/editAddress/<%= address._id %>"><i class="tf-pencil2"  aria-hidden="true"></i></a>
+                            <button type="button" class="btn btn-default"><i class="tf-ion-close" aria-hidden="true"></i></button>
+                          </div>
+                        </td>
+                      </tr>
+                <% }) %>
+               
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
