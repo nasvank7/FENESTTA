@@ -8,6 +8,9 @@ const CartSchema = new mongoose.Schema(
       required: true,
     },
     total:{type:String},
+    wallet:{
+     type:Number
+    },
 
     products: [
       {

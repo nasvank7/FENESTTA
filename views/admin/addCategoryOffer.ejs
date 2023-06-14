@@ -1,0 +1,62 @@
+<%- include('../partials/admin-header') %>
+
+<!-- Form Start -->
+<div class="container-fluid pt-4 px-4">
+  <div class="row g-4 align-items-center justify-content-center mt-5">
+    <div class="col-sm-12 col-xl-6">
+      <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Add Offer for Category</h6>
+        <form action="/add_category_offer" method="POST" name="basic" onsubmit="return validate()">
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Category Title</label
+            >
+            <input type="text" class="form-control" name="categorytitle" />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Expiry Date</label
+            >
+            <input type="date" class="form-control" name="date" />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Offer Amount</label
+            >
+            <input type="text" class="form-control" name="offer" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Offer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Form End -->
+<script>
+  function validate(){
+  
+
+    const category= document.forms["basic"]["category"].value.trim()
+    const description= document.forms["basic"]["description"].value.trim()
+    
+    if (category == "") {
+      alert("category must be filled out");
+        return false;
+    }
+
+
+    if (description=="") {
+      alert("description must be filled out");
+      return false;
+    }
+
+      
+     
+    
+    return true; 
+}
+  
+</script>
+ 
+
+<%- include('../partials/admin-footer') %>

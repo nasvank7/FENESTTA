@@ -81,7 +81,7 @@
                         <span>Admin</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
+                <div class="app-menu navbar-nav w-100">
                     <a href="/admin_index" class="nav-item nav-link" id="dashboardLink"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="/products" class="nav-item nav-link" id="productsLink"><i class="fa fa-th me-2"></i>Products</a>
                     <a href="/users" class="nav-item nav-link" id="usersLink"><i class="fa fa-keyboard me-2"></i>Users</a>
@@ -94,19 +94,24 @@
                   </div>
                   
                   <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                      var links = document.getElementsByClassName('nav-link');
-                      for (var i = 0; i < links.length; i++) {
-                        links[i].addEventListener('click', function() {
-                          var currentActive = document.getElementsByClassName('active');
-                          if (currentActive.length > 0) {
-                            currentActive[0].classList.remove('active');
-                          }
-                          this.classList.add('active');
-                        });
-                      }
-                    });
-                  </script>
+                    $(document).ready(function () {
+                    // Get the current route
+                    var currentRoute = window.location.pathname;
+                
+                    // Loop through each navigation link
+                    $('.app-menu .nav-link').each(function () {
+                        // Check if the link href matches the current route
+                        if ($(this).attr('href') === currentRoute) {
+                            // Add the 'active' class to the link
+                            $(this).addClass('active');
+                        } else {
+                            // Remove the 'active' class from other links
+                            $(this).removeClass('active');
+                        }
+                     });
+                    });
+                </script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                   
                   
                

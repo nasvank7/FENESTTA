@@ -153,17 +153,17 @@
     <!-- <h1>Invoice Template <small>with Foundation Flex-Grid Layout</small></h1> -->
   </div>
 </header>
-<div class="container" id="invoice">
+<div class="container" style="width: 100%;" >
   <div class="row expanded">
     <main class="columns">
-      <div class="inner-container">
+      <div class="inner-container" style="width: fit-content;"  id="invoice">
         <header class="row align-center">
           <a class="button hollow secondary" href="/shop"><i class="ion ion-chevron-left"></i> Go Back to Purchases</a>
         
         </header>
         <section class="row">
-          <div class="callout large invoice-container">
-            <table class="invoice large" style="width: 100%;">
+          <div class="callout large invoice-container" style="width: auto;">
+            <table class="invoice large"  style="width: 100%;">
               <tr class="header">
                 <td class="">
                 <h1 style="font-weight: bolder; font-family: 'Times New Roman', Times, serif; color: black;" >Fenestta</h1>
@@ -174,7 +174,7 @@
               </tr>
               <tr class="intro">
                 <td class="">
-                  Hello,<h5 style="font-weight: bolder;"><%= userOrder.name %></h5>
+                  Hello,<h5 style="font-weight: bolder;"><%= address.address.address[0].name %></h5>
                   Thank you for your order.
                 </td>
                 <td class="text-right">
@@ -212,8 +212,8 @@
               </tr>
               <tr class="totals">
                 <td></td>
-                <td>
-                  <table style="width: 70%; margin-left: 175px;">
+                <td style="display: flex; justify-content: end;">
+                  <table >
                     <tr class="subtotal">
                       <td class="num" >Subtotal:</td>
                       <td class="num"> $<%= order.total %></td>
@@ -271,9 +271,8 @@
     const button = document.getElementById('downloadPdf');
 
     function generatePDF() {
-        // Choose the element that your content will be rendered to.
+      
         const element = document.getElementById('invoice');
-        // Choose the element and save the PDF for your user.
         html2pdf().from(element).save();
     }
 

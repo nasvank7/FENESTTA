@@ -50,7 +50,7 @@
 
                         <div class="form-group mt-3">
                             <label for="image">Photo file:</label>
-                            <input type="file" class="form-control-file" id="photo" name="photo" multiple>
+                            <input  id="file" type="file" class="form-control-file" id="photo" name="photo" multiple onchange="return fileValidation()" >
                             <img src="/<%= prod.photo[0] %>" width="100" class="img-thumbnail mt-3" alt="">
                         </div>
 
@@ -97,6 +97,45 @@
             </div>
         </div>
     </div>
-    <!-- Form End -->
+    <script>
+    function ValidateBasic() {
+
+      var name = document.forms["basic"]["name"].value.trim();
+      var price = document.forms["basic"]["price"].value.trim()
+      var stock = document.forms["basic"]["stock"].value.trim()
+
+
+      if (name == "") {
+        alert("name must be filled out");
+        return false;
+      }
+      var priceRegex = /^(\d*([.,](?=\d{3}))?\d+)+((?!\2)[.,]\d\d)?$/;
+      if (!priceRegex.test(price)) {
+        alert("Invalid price address.");
+        return false;
+      }
+      if (stock == "") {
+        alert("stock must be filled out");
+        return false;
+      }
+      return true;
+    }
+
+  </script>
+  <script>
+    function fileValidation() {
+      var fileInput =
+        document.getElementById('file');
+      var filePath = fileInput.value;
+      var allowedExtensions =
+        /(\.jpg|\.jpeg|\.avif|\.webp)$/i;
+
+      if (!allowedExtensions.exec(filePath)) {
+        alert('Invalid file type');
+        fileInput.value = '';
+        return false;
+      }
+    }
+  </script>
 
     <%-include('../partials/admin-footer')%>

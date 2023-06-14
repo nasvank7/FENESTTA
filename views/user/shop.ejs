@@ -3,58 +3,68 @@
 
 <section class="products section bg-gray">
 	<div class="container">
-
+		<div class="title text-center">
+			<h2>PRODUCTS</h2>
+		</div>
 		<div class="row">
-		<div style="display: flex;">
-			<div class="widget" style="width: 50%; margin-left: 50px;">
-				<h4 class="widget-title">Sort By</h4>
-				<button class="btn btn-secondary"><a href="/LTH?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">Low to High</a></button> &nbsp;&nbsp;
-				<button class="btn btn-secondary"><a href="/HTL?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">High to Low</a></button>
-			</div>
 		
-			<div class="widget product-category" style="width: 50%; margin-left: 500px;">
-				<h4 class="widget-title" >Filter By Categories</h4>
+		<div class="col-md-3">
+			<div class="widget">
+				<h4 class="widget-title">Short By</h4>
+			
+						<button class="btn btn-secondary"><a href="/LTH?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">Low to High</a></button> &nbsp;&nbsp;
+						<button class="btn btn-secondary"><a href="/HTL?page=<%= currentPage %>" style="font-weight: bold; color: rgb(98, 98, 91);">High to Low</a></button>
+				
+			</div>
+			<div class="widget product-category">
+				<h4 class="widget-title">Categories</h4>
 				<div class="panel-group commonAccordion" id="accordion" role="tablist" aria-multiselectable="true">
-					  <div class="panel panel-default" style="width: 200px;">
+					  <div class="panel panel-default">
 						<div class="panel-heading" role="tab" id="headingOne">
 							  <h4 class="panel-title">
-								<a role="button" data-toggle="collapse" data-parent="#accordion" href="/shirts" aria-expanded="true" >
-							SHIRTS
+								<a role="button" data-toggle="collapse" data-parent="#accordion" href="/shirts" aria-expanded="true" aria-controls="collapseOne">
+								  SHIRTS
 								</a>
 							  </h4>
 						</div>
-				
+					<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+						
+					</div>
 				  </div>
-				  <div class="panel panel-default" style="width: 200px;">
+				  <div class="panel panel-default">
 					<div class="panel-heading" role="tab" id="headingTwo">
 					  <h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="/tshirts" aria-expanded="false" aria-controls="collapseTwo">
-						      T-SHIRTS
+						T SHIRTS
 						</a>
 					  </h4>
 					</div>
-				
-				  </div>
-				  <div class="panel panel-default" style="width: 200px;">
-					<div class="panel-heading" role="tab" id="headingOne">
-						  <h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#accordion" href="/hoodies" aria-expanded="true" aria-controls="collapseOne">
-						HOODIES
-							</a>
-						  </h4>
+					<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					
 					</div>
-			
-			  </div>
-				 
+				  </div>
+				  <div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="headingThree">
+					  <h4 class="panel-title">
+						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="/hoodies" aria-expanded="false" aria-controls="collapseThree">
+						      HOODIES
+						</a>
+					  </h4>
+					</div>
+					<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+						<div class="panel-body">
+						
+						</div>
+					</div>
+				  </div>
 				</div>
 				
 			</div>
 		</div>
-			<div class="title text-center">
-				<h2>PRODUCTS</h2>
-			</div>
-		</div>
-
+			
+		
+		<div class="col-md-9">
+	
 		<div class="row">
 			<% if (user) { %>
 			<% product.forEach(function(product) { %>
@@ -92,7 +102,7 @@
 			<% } %>
 			<% }) %>
 			<% } else {  %>
-			<% product.forEach(function(product) { %>
+			<% product.forEach(function(product,i) { %>
 			<% if(product.Blocked) { %>	
 			<div class="col-md-4">
 				<div class="product-item">
@@ -125,6 +135,8 @@
 							}
 						</style>
 						<p class="product-price">$ <%= product.price %></p>
+						
+						
 						<p class="category-s"><%= product.category_name %></p>
 					</div>
 				</div>
@@ -133,7 +145,7 @@
 			<% }) %>
 			<% } %>
 		</div>
-
+    </div>
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<ul class="pagination">
@@ -153,7 +165,7 @@
 				</ul>
 			</div>
 		</div>
-
+ </div>
 	</div>
 </section>
 

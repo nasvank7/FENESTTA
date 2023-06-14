@@ -2,43 +2,32 @@
 <%-include('../partials/user-nav')%>
 
 
-<div class="hero-slider"><% if (!banner.status) { %>
-	<div class="slider-item th-fullpage hero-area" style="background-image:  url(<%= banner[0].photo %>)">
-		<div class="container">
-		  <div class="row">
-			<div class="col-lg-8 text-center">
-			  <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
-			  <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-			  <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/shop">Shop Now</a>
+
+	<div class="hero-slider">
+		<%= console.log(banner) %>
+		  <% banner.forEach((element,i) => { %>
+			
+			<% if (element.status) { %>
+			<div class="slider-item th-fullpage hero-area" style="background-image: url('<%= element.photo[i] %>')">
+			  <div class="container">
+				<div class="row">
+				  <div class="col-lg-8 text-center">
+					<p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
+					<h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
+					<a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="shop.html">Shop Now</a>
+				  </div>
+				</div>
+			  </div>
 			</div>
-		  </div>
-		</div>
-	  </div>
-<% } %>
+			<% } %>
+		
+		  <% }) %>
+	
+	
+
 
   
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(/asset_1/images/slider/slider-4.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-left">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/shop">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slider-item th-fullpage hero-area" style="background-image: url(/asset_1/images/slider/slider-2.jpg);">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 text-right">
-          <p data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".1">PRODUCTS</p>
-          <h1 data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".5">The beauty of nature <br> is hidden in details.</h1>
-          <a data-duration-in=".3" data-animation-in="fadeInUp" data-delay-in=".8" class="btn" href="/shop">Shop Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 </div>
 
 <section class="product-category section">
@@ -51,7 +40,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="category-box">
-					<a href="/tshirts">
+					<a href="/offertshirts">
 						<img src="/asset_1/images/shop/category/calvin-k.jpg" alt="" />
 						<div class="content">
 							<h3>T-SHIRTS</h3>
@@ -60,7 +49,7 @@
 					</a>	
 				</div>
 				<div class="category-box">
-					<a href="/hoodies">
+					<a href="/offerhoodies">
 						<img src="/asset_1/images/shop/category/JACKETS.webp" alt="" />
 						<div class="content">
 							<h3>HOODIES</h3>
@@ -71,7 +60,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="category-box category-box-2">
-					<a href="/shirts">
+					<a href="/offershirts">
 						<img src="/asset_1/images/shop/category/calvin shirts.webp" alt="" />
 						<div class="content">
 							<h3>SHIRTS</h3>

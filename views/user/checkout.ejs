@@ -165,12 +165,16 @@
                               <div id="couponMessage1" style="padding-bottom: 10px; color: rgb(7, 126, 13);"></div>
 
                               <button type="button" onclick="redeem()" class="btn btn-primary ml-auto" style="margin-bottom: 30px;">Redeem</button>
+                                <!-- <button onclick="cancelRedeem()"  style="display: inline-block;" hidden>cancel</button> -->
                            </form>
                         </div>
                      </div>
-                     <label>
-                        <input type="checkbox" id="walletCheckbox"> Use wallet balance
-                      </label>
+                     <button type="button" class="undisplay btn btn-primary" onclick="walletPay()">Use wallet</button>
+                     <!-- <button type="button" onclick="deleteWallet()"><i id="wallet_remove" ></i></button> -->
+                   <span id="wallet"></span>
+                   <!-- 
+                    <span></span> -->
+                   
                       <ul class="summary-prices">
                          <li>
                             <span >Subtotal:
@@ -270,7 +274,7 @@
            data: formData,
            success: function(response) {
             
-              // Handle the response here
+              
               
               handleCouponResponse(response);
            },
@@ -286,21 +290,21 @@
     var totalElement = document.getElementById('totalprice');
   
     if (couponCodeInput.value.trim() === '') {
-      // Clear the message if the coupon code input is empty
+      
       couponMessage.textContent = '';
       return;
     }
   
     if (response.success) {
-      // Coupon is available, update the message and subtract the coupon value from the total
+  
       var couponValue = response.amount;
       var total = parseFloat(totalElement.textContent);
       var updatedTotal = total - couponValue;
-      totalElement.textContent = updatedTotal.toFixed(2); // Update the total with 2 decimal places
-      couponMessage1.textContent = response.message; // Display the success message from the response
+      totalElement.textContent = updatedTotal.toFixed(2); 
+      couponMessage1.textContent = response.message;
     } else {
-      // Coupon is not available or there was an error
-      couponMessage.textContent = response.message; // Display the error message from the response
+     
+      couponMessage.textContent = response.message; 
     }
   }
   
@@ -324,4 +328,149 @@
 });
 
 </script>
+<script>
+function cancelRedeem() {
+  $.ajax({
+    url: "/cancel_redeem_coupon",
+    type: "POST",
+    success: function(response) {
+      if (response.success) {
+        // Update the total price on the page
+        document.getElementById('totalprice').innerHTML = response.newTotal;
+      } else {
+        console.error('Failed to cancel redeemed amount:', response.message);
+      }
+    },
+    error: function(xhr, status, error) {
+      console.error('Cancel redeem request failed. Status:', status);
+    }
+  });
+}
+
+</script>
+ <script>
+  
+         function walletPay() {
+
+          const walletButton = document.querySelector('.undisplay');
+      walletButton.setAttribute('disabled', 'true');
+            $.ajax({
+               url: "/wallet_buy",
+               type: "POST",
+
+               success: function (data) {
+
+                
+
+                  if (data.success) {
+                     setNewTotal(data.wallet_balance);
+                  } else {
+                     console.log('error');
+                  }
+               },
+               error: function (xhr, status, error) {
+                  console.error('Coupon request failed. Status:', status);
+               }
+            });
+
+
+         }
+         const setNewTotal = (walletBalance) => {
+            const itemTotal = parseInt(document.getElementById('totalprice').innerHTML);
+            console.log(itemTotal);
+            // let total = 0;
+            // for (let i = 0; i < itemTotal.length; i++) {
+            //    total += Number(itemTotal[i].innerHTML);
+            // }
+
+            let sum = (10 / 100) * itemTotal
+            console.log(sum);
+               let newtotal=0
+            if (walletBalance > sum) {
+               newtotal = (itemTotal - sum)
+         
+               console.log(newtotal)
+
+                  document.getElementById('totalprice').innerHTML = ` ${newtotal}`;
+               
+              } else {
+                return alert('wallet Amount insufficient')
+              }
+              
+              document.getElementById('wallet').innerHTML = ` wallet amount - ${sum}`;
+              document.getElementById('wallet_remove').innerHTML = `<i class="fa fa-times"></i>`;
+            document.getElementById('wallet').style.display = 'block';
+            document.getElementById('wallet_remove').style.display = 'inline';
+             
+
+         }
+
+         
+
+      </script>
+      <script>
+        
+
+function deleteWallet() {
+      
+
+      $.ajax({
+         url: "/wallet_delete",
+         type: "POST",
+        
+         success: function(data) {
+
+
+        console.log(data,"l");
+          
+          if(data.success){
+         
+        
+         
+            setSubtotal()
+            document.getElementById('wallet').style.display = 'none';
+             document.getElementById('wallet_remove').style.display = 'none';
+    
+         
+         
+       }else{
+         console.log('error');
+       }
+
+
+            
+            
+         },
+         error: function(xhr, status, error) {
+            console.error('Coupon request failed. Status:', status);
+         }
+      });
+
+    
+  }
+
+  const setDeleteTotal = (walletBalance) => {
+    const itemTotal = document.getElementsByClassName('item-total');
+    let total = 0;
+    for (let i = 0; i < itemTotal.length; i++) {
+      total += Number(itemTotal[i].innerHTML);
+    }
+    
+    let sum= (10/100)*total
+     let newtotal=0
+    if(walletBalance>sum){
+      newtotal=(total+sum) +50
+
+    
+    }else{
+     return alert('wallet Amount insufficient')
+    }
+    
+    document.getElementById('totalprice').innerHTML = ` ${newtotal}`;
+  }
+  
+
+  
+      </script>
+
  <%-include('../partials/user-footer')%>

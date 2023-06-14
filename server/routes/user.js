@@ -2,83 +2,63 @@
 var express=require('express')
 var router=express.Router();
 var usercontroller=require('../controller/user_controller')
+const offercontroller=require('../controller/offer_controller')
+const couponcontroller=require('../controller/couponcontoller')
+const ordercontroller=require('../controller/order_controller')
+const walletcontroller=require('../controller/wallet_controller')
+const productcontroller=require('../controller/product_controller')
+const cartcontroller=require('../controller/cart_controller')
+const categorycontroller=require('../controller/category_controller')
+
 const userSchema = require("../model/model");
+const userAuth=require('../middlewares/userAuth')
 
-const isLogged=(req,res,next)=>{
-    if(req.session.user){
-        res.redirect('/')
-    }else{
-        next()
-    }
-}
-const isLoggedIn=(req,res,next)=>{
-    if(req.session.user){
-        next()
-    }else{
-        res.redirect('/')
-    }
-}
-
-const isUserBlocked=async(req,res,next)=>{
-    const userId=req.session.user?._id
-    const user= await userSchema.findById(userId)
-  
-    if(user.isBlocked){
-        req.session.save(() => {
-            req.session.user=false
-            res.redirect('/login'); 
-         })
-         return
-
-    }else{
-      next()
-    }
-}
 
 
 router.get('/',usercontroller.index)
-router.get('/login',usercontroller.getLogin)
-router.get('/signup',isLogged,usercontroller.dosignup)
+router.get('/login',userAuth.isLogged,usercontroller.getLogin)
+router.get('/signup',userAuth.isLogged,usercontroller.dosignup)
 router.post('/signup',usercontroller.doSignup)
 router.post('/login',usercontroller.dologin)
 router.get('/logout',usercontroller.logout)
-router.get('/newarrival',usercontroller.newArrival)
-router.get('/shop',usercontroller.product_list)
+router.get('/newarrival',productcontroller.newArrival)
+router.get('/shop',productcontroller.product_list)
 router.get('/home',usercontroller.Home)
-router.get('/single/:id',usercontroller.single_product)
+router.get('/single/:id',productcontroller.single_product)
 router.get('/login-otp',usercontroller.getlogin_otp)
 router.post('/sendotp',usercontroller.sendotp)
 router.post('/verifyotp',usercontroller.verifyotp)
-router.get('/cart',isLoggedIn,isUserBlocked,usercontroller.getCart)
-router.get('/add-to-cart/:id',usercontroller.addtocart)
-router.post('/increaseQuantity',usercontroller.updateQuantity)
-router.post('/decreaseQuantity',usercontroller.decrementQuantity)
+router.get('/cart',userAuth.isLoggedIn,userAuth.isUserBlocked,cartcontroller.getCart)
+router.get('/add-to-cart/:id',cartcontroller.addtocart)
+router.post('/increaseQuantity',cartcontroller.updateQuantity)
+router.post('/decreaseQuantity',cartcontroller.decrementQuantity)
 // router.get('/delete_cart/:id',usercontroller.deleteproduct)
-router.post('/productRemove',usercontroller.productRemove)
+router.post('/productRemove',cartcontroller.productRemove)
 
-router.get('/address',isLoggedIn,isUserBlocked,usercontroller.checkOut)
+router.get('/address',userAuth.isLoggedIn,userAuth.isUserBlocked,cartcontroller.checkOut)
 router.post('/address',usercontroller.Addaddress)
 
-router.get('/checkout/:id',isLoggedIn,isUserBlocked,usercontroller.Checkout)
-router.get('/hoodies',usercontroller.getHoodies)
-router.get('/shirts',usercontroller.getShirts)
-router.get('/tshirts',usercontroller.getTshirts)
-router.post('/order/:id',isLoggedIn,usercontroller.orderConfirmation)
+router.get('/checkout/:id',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.Checkout)
+router.get('/hoodies',categorycontroller.getHoodies)
+router.get('/shirts',categorycontroller.getShirts)
+router.get('/tshirts',categorycontroller.getTshirts)
 
 
-router.get('/orderDetails',isLoggedIn,isUserBlocked,usercontroller.orderDetail)
-router.get('/userProfile',isLoggedIn,isUserBlocked,usercontroller.userProfile)
-router.get('/userAddress',isLoggedIn,isUserBlocked,usercontroller.UserAdressess)
-router.get('/userOrder',isLoggedIn,isUserBlocked,usercontroller.UserOrder)
-router.get('/updateProfile/:id',isLoggedIn,isUserBlocked,usercontroller.updateProfile)
-router.post('/updateProfile/:id',isLoggedIn,isUserBlocked,usercontroller.UpdateProfile)
-router.post('/updatePassword/:id',isLoggedIn,isUserBlocked,usercontroller.updatePassword)
+router.get('/userProfile',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.userProfile)
+router.get('/userAddress',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.UserAdressess)
+router.get('/userOrder',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.UserOrder)
+router.get('/updateProfile/:id',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.updateProfile)
+router.post('/updateProfile/:id',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.UpdateProfile)
+router.post('/updatePassword/:id',userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.updatePassword)
 
 
-router.get('/paypal-success',usercontroller.paypalSuccess)
-router.post('/cancel_product/:id',usercontroller.Cancelorder)
-router.post('/return_product/:id',usercontroller.Returnorder)
-router.get('/orderView/:id',usercontroller.OrderView)
+router.post('/order/:id',userAuth.isLoggedIn,ordercontroller.orderConfirmation)
+router.get('/orderDetails',userAuth.isLoggedIn,userAuth.isUserBlocked,ordercontroller.orderDetail)
+router.get('/paypal-success',ordercontroller.paypalSuccess)
+router.post('/cancel_product/:id',ordercontroller.Cancelorder)
+router.post('/return_product/:id',ordercontroller.Returnorder)
+router.get('/orderView/:id',ordercontroller.OrderView)
+router.get('/invoice/:id',userAuth.isLoggedIn,userAuth.isUserBlocked,ordercontroller.Invoice)
 
 router.get('/LTH',usercontroller.LowToHigh)
 router.get('/HTL',usercontroller.HighToLow)
@@ -87,9 +67,14 @@ router.get('/forgotPassword',usercontroller.Forgotpage)
 router.post('/forgetOtp',usercontroller.SendOTP)
 router.post('/fverifyOtp',usercontroller.verifyForget)
 router.post('/verify_password',usercontroller.forgot_password)
-router.post('/redeem_coupon',usercontroller.redeemCoupon)
-router.get('/wallet',isLoggedIn,usercontroller.Wallet)
-router.get("/editAddress/:id",isLoggedIn,isUserBlocked,usercontroller.EditAddress)
-router.post("/updateAddress/:id",isLoggedIn,isUserBlocked,usercontroller.updateAddress)
-router.get('/invoice/:id',isLoggedIn,isUserBlocked,usercontroller.Invoice)
+router.post('/redeem_coupon',couponcontroller.redeemCoupon)
+router.post( "/cancel_redeem_coupon",couponcontroller.cancelRedeemCoupon)
+router.get('/wallet',userAuth.isLoggedIn,walletcontroller.Wallet)
+router.post('/wallet_buy',walletcontroller.wallet_buy)
+// router.post('/wallet_delete',usercontroller.Wallet_del)
+router.get("/editAddress/:id",userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.EditAddress)
+router.post("/updateAddress/:id",userAuth.isLoggedIn,userAuth.isUserBlocked,usercontroller.updateAddress)
+router.get('/offertshirts',offercontroller.CategoryOffertshirts)
+router.get('/offerhoodies',offercontroller.CategoryOfferhoodies)
+router.get('/offershirts',offercontroller.CategoryOffershirts)
 module.exports =router

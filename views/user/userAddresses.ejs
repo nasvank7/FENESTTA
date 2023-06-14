@@ -40,24 +40,27 @@
                 </tr>
               </thead>
               <tbody>
+              <% if (addresses && addresses.length>0) { %>
                 <% addresses.forEach((address,index) => { %>
-                    <tr>
-                        <td><%= index+1 %></td>
-                        <td><%= address.name %></td>
-                        <td><%= address.Address %></td>
-                        <td><%= address.state %></td>
-                        <td><%= address.city %></td>
-                        <td><%= address.phone %></td>
-                        <td>
-                          <div class="btn-group" role="group">
-                            <a href="/editAddress/<%= address._id %>"><i class="tf-pencil2"  aria-hidden="true"></i></a>
-                            <button type="button" class="btn btn-default"><i class="tf-ion-close" aria-hidden="true"></i></button>
-                          </div>
-                        </td>
-                      </tr>
-                <% }) %>
-               
-               
+                  <tr>
+                      <td><%= index+1 %></td>
+                      <td><%= address.name %></td>
+                      <td><%= address.Address %></td>
+                      <td><%= address.state %></td>
+                      <td><%= address.city %></td>
+                      <td><%= address.phone %></td>
+                      <td>
+                        <div class="btn-group" role="group">
+                          <a href="/editAddress/<%= address._id %>"><i class="tf-pencil2"  aria-hidden="true"></i></a>
+                          <button type="button" class="btn btn-default"><i class="tf-ion-close" aria-hidden="true"></i></button>
+                        </div>
+                      </td>
+                    </tr>
+              <% }) %>
+             
+             
+              <% } %>
+              
               </tbody>
             </table>
           </div>
