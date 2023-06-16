@@ -1,5 +1,5 @@
-require("dotenv").config();
 const express = require("express");
+require("dotenv").config();
 const path = require("path");
 const bodyparser = require("body-parser");
 const session = require("express-session");

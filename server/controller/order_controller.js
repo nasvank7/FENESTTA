@@ -206,6 +206,7 @@ exports.orderConfirmation = async (req, res) => {
         let createPayment = {
           intent: "sale",
           payer: {
+            
             payment_method: "paypal",
           },
           redirect_urls: {
