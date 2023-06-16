@@ -77,7 +77,7 @@ exports.product_list = async (req, res) => {
       res.render("admin/add_product_page", { admin, data });
     } catch (error) {
       console.log(error);
-      res.status(500).send("Server Error");
+    
     }
   };
   //to add product
