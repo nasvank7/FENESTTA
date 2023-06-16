@@ -209,8 +209,8 @@ exports.orderConfirmation = async (req, res) => {
             payment_method: "paypal",
           },
           redirect_urls: {
-            return_url: "http://localhost:3000/paypal-success",
-            cancel_url: "http://localhost:3000/paypal-err",
+            return_url: "http://fenestta.shop/paypal-success",
+            cancel_url: "http://fenestta.shop/paypal-err",
           },
           transactions: [
             {
