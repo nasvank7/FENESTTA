@@ -138,36 +138,6 @@ exports.find_user = async (req, res) => {
     res.send({ message: error.message });
   }
 };
-//to get add product page
-exports.add_Product = async (req, res) => {
-  try {
-    const admin = req.session.admin;
-    const data = await categorySchema.find();
-    res.render("admin/add_product_page", { admin, data });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Server Error");
-  }
-};
-//to add product
-exports.addProduct = async (req, res) => {
-  try {
-    const product = new productSchema({
-      name: req.body.name,
-      price: req.body.price,
-      category_name: req.body.category,
-      stock: req.body.stock,
-      photo: req.files.map((file) => file.filename),
-    });
-  
-    await product.save();
-    const product_data = await productSchema.find().exec();
-    res.render("admin/products", { product_data });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: error.message || "Some error occurred" });
-  }
-};
 
 //to soft delete the product
 exports.undo = async (req, res) => {
