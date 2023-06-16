@@ -78,6 +78,7 @@ exports.product_list = async (req, res) => {
     } catch (error) {
       console.log(error);
     // test
+    res.status(500).send("Some error occurred");
     }
   };
   //to add product
