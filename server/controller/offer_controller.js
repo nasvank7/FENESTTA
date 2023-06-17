@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const userSchema = require("../model/model");
 const productSchema = require("../model/product_model");
+const categorySchema=require('../model/add_category')
 const CartSchema = require("../model/cart");
 const AddressSchema = require("../model/address");
 const couponSchema=require('../model/coupon')
