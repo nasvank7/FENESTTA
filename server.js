@@ -44,19 +44,19 @@ app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use(userRouter);
 app.use(adminRouter);
-app.use(function (req, res, next) {
-  next(createError(404));
-  res.render('error')
-});
-app.use(function (error, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = error.message;
-  res.locals.error = req.app.get("env") === "development" ? error : {};
+// app.use(function (req, res, next) {
+//   next(createError(404));
+//   res.render('error')
+// });
+// app.use(function (error, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = error.message;
+//   res.locals.error = req.app.get("env") === "development" ? error : {};
 
-  // render the error page
-  res.status(error.status || 500);
-  res.render("error");
-});
+//   // render the error page
+//   res.status(error.status || 500);
+//   res.render("error");
+// });
 app.listen(3000, (req, res) => {
   console.log("server is started");
 });
