@@ -129,7 +129,7 @@ exports.Coupon = async (req, res) => {
     }
   
     const amount = couponFind.discount;
-  
+   
     res.json({
       success: true,
       message: 'Coupon available',
