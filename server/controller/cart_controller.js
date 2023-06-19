@@ -29,7 +29,7 @@ exports.getCart = async (req, res) => {
         let cartId = cart._id;
         res.render("user/cart", { user, products, userId });
       } else {
-        res.render("user/emptyCart", { user });
+        res.render("user/emptycart", { user });
       }
     } catch (error) {
       console.error(error);
